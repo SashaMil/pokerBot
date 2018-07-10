@@ -1,0 +1,63 @@
+body{
+  background-color : #2196f3;
+}
+
+button{
+  background-color: $button-color;
+  font-family: 'Droid Sans', sans-serif;
+  height: 50px;
+  width: 220px;
+  margin: 30px;
+  border: none;
+  border-bottom: 2px solid $shadow-color;
+  border-radius: 5px;
+  color: $font-color;
+  font-size: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+button:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -200%;
+  right: -25%;
+  width: 150%;
+  height: 500%;
+  background: $shadow-color;
+  border-radius: 100%;
+  opacity: 0;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: .6;
+  }
+  30% {
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+.click:not(:active):after {
+  animation: ripple 2s ease-out;
+}
+
+.hover:hover:after{
+  animation: ripple 2s ease-out;
+}
+
+/* fixes initial animation run, without user input, on page load.
+ */
+button:after {
+  visibility: hidden;
+}
+
+button:focus:after {
+  visibility: visible;
+}
