@@ -183,10 +183,7 @@ const mapStateToProps = state => ({
 });
 
 class UserPage extends Component {
-  constructor() {
-    super();
-    this.state = {isOpen: false};
-  }
+
   componentDidMount() {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
   }
@@ -200,12 +197,6 @@ class UserPage extends Component {
   logout = () => {
     this.props.dispatch(triggerLogout());
     // this.props.history.push('home');
-  }
-
-  toggleModal = () => {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
   }
 
   render() {

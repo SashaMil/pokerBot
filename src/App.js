@@ -31,10 +31,7 @@ const App = () => (
           path="/user"
           component={UserPage}
         />
-        <Route
-        path="/stats"
-        component={Stats}
-        />
+
         {/* OTHERWISE (no path!) */}
         <Route render={() => <h1>404</h1>} />
 
