@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 
 import LoginPage from './components/LoginPage/LoginPage';
+import Stats from './components/Stats/Stats';
 import RegisterPage from './components/RegisterPage/RegisterPage';
 import UserPage from './components/UserPage/UserPage';
 import InfoPage from './components/InfoPage/InfoPage';
@@ -29,6 +30,10 @@ const App = () => (
         <Route
           path="/user"
           component={UserPage}
+        />
+        <Route
+        path="/stats"
+        component={Stats}
         />
         {/* OTHERWISE (no path!) */}
         <Route render={() => <h1>404</h1>} />

@@ -298,15 +298,6 @@ class UserPage extends Component {
     return (
       <div>
         { content }
-        <Router>
-          <Switch>
-            <Route path="/stats"
-              component={Stats}
-            />
-            {/* OTHERWISE (no path!) */}
-            <Route render={() => <h1>404</h1>} />
-          </Switch>
-        </Router>
       </div>
 
     );
