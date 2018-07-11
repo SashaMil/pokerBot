@@ -220,24 +220,33 @@ class UserPage extends Component {
     });
   }
 
+  routeToView = (viewName) => {
+    viewName = viewName.toLowerCase();
+    viewName = viewName.replace(/\s/g, '');
+    window.location.href = `#/${viewName}`
+  }
+
+
   render() {
     let content = null;
     const { classes } = this.props;
-
 
     if (this.props.user.userName) {
       content = (
         <div>
           <h1
             id="welcome"
+            style={{color: 'white'}}
           >
-
+          Welcome {this.props.user.userName}
           </h1>
           <div className={classes.root}>
                 return (
                   <div className={classes.root}>
                     {images.map(image => (
                       <ButtonBase
+                        onClick={() => this.routeToView(image.title)}
+
                         focusRipple
                         key={image.title}
                         className={classes.image}
@@ -270,6 +279,7 @@ class UserPage extends Component {
                   <div className={classes.root2}>
                     {images2.map(image => (
                       <ButtonBase
+                        onClick={() => this.routeToView(image.title)}
                         focusRipple
                         key={image.title}
                         className={classes.image}

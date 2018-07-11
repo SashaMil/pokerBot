@@ -11,6 +11,7 @@ import Stats from './components/Stats/Stats';
 import RegisterPage from './components/RegisterPage/RegisterPage';
 import UserPage from './components/UserPage/UserPage';
 import InfoPage from './components/InfoPage/InfoPage';
+import Table from './components/Table/Table';
 
 import './styles/main.css';
 
@@ -35,6 +36,10 @@ const App = () => (
         path="/stats"
         component={Stats}
         />
+      <Route
+        path="/newgame"
+        component={Table}
+      />
         {/* OTHERWISE (no path!) */}
         <Route render={() => <h1>404</h1>} />
 
