@@ -162,7 +162,7 @@ const images = [
   },
   {
     url: image2,
-    title: 'Preferences',
+    title: 'Leaderboard',
     width: '33.3%',
   },
   {
@@ -172,11 +172,23 @@ const images = [
   },
 ];
 
-
-
-
-
-
+const images2 = [
+  {
+    url: image1,
+    title: 'Preferences',
+    width: '33.3%',
+  },
+  {
+    url: image2,
+    title: 'Account Settings',
+    width: '33.3%',
+  },
+  {
+    url: image3,
+    title: 'Logout',
+    width: '33.3%',
+  },
+]
 
 const mapStateToProps = state => ({
   user: state.user,
@@ -256,7 +268,7 @@ class UserPage extends Component {
                     ))}
                   </div>
                   <div className={classes.root2}>
-                    {images.map(image => (
+                    {images2.map(image => (
                       <ButtonBase
                         focusRipple
                         key={image.title}
@@ -290,10 +302,9 @@ class UserPage extends Component {
                 );
               }
             </div>
-                  <Button><Link to='/stats'>Next</Link></Button>
-                    </div>
-                  );
-                }
+          </div>
+          );
+        }
 
     return (
       <div>
