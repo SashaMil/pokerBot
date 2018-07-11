@@ -6,7 +6,6 @@ import {
   Switch,
 } from 'react-router-dom';
 
-import Header from './components/Header/Header';
 import LoginPage from './components/LoginPage/LoginPage';
 import RegisterPage from './components/RegisterPage/RegisterPage';
 import UserPage from './components/UserPage/UserPage';
@@ -16,7 +15,6 @@ import './styles/main.css';
 
 const App = () => (
   <div>
-    <Header title="Project Base" />
     <Router>
       <Switch>
         <Redirect exact from="/" to="/home" />
@@ -31,10 +29,6 @@ const App = () => (
         <Route
           path="/user"
           component={UserPage}
-        />
-        <Route
-          path="/info"
-          component={InfoPage}
         />
         {/* OTHERWISE (no path!) */}
         <Route render={() => <h1>404</h1>} />
