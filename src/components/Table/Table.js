@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 import Deck from '../Deck/Deck';
 
 
+
 const mapStateToProps = state => ({
   user: state.user,
   table: state.table,
@@ -32,7 +33,9 @@ class Table extends Component {
   render() {
     return(
       <div>
-        <Deck />
+        <div>
+          <Deck />
+        </div>
         <button onClick={this.test}>Testing</button>
       </div>
 
