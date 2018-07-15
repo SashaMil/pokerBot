@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import Hand from '../Hand/Hand';
 import { deck } from '../../redux/actions/tableActions';
+import image3 from '../../../src/images/if_Avatar_500621.png';
+
 
 
 
@@ -21,7 +23,11 @@ class Deck extends Component {
   createNewDeck = () => {
 
     const suits = ['Hearts', 'Spades', 'Clubs', 'Diamonds'];
-    const values = [[['Ace'], [1, 14]], ['2', [2]], ['3', [3]], ['4', [4]], ['5', [5]], ['6', [6]], ['7', [7]], ['8', [8]], ['9', [9]], ['10', [10]], ['Jack', [11]], ['Queen', [12]], ['King', [13]]];
+    const values = [[['Ace'], [1, 14]], ['2', [2]], ['3', [3]], ['4', [4]], ['5', [5]], ['6', [6]], ['7', [7]],
+    ['8', [8]], ['9', [9]], ['10', [10]], ['Jack', [11]], ['Queen', [12]], ['King', [13]]];
+    const imageSuits = ['H', 'S', 'C', 'D'];
+
+
 
     let newDeck = [];
 
@@ -31,9 +37,23 @@ class Deck extends Component {
         }
     }
 
-    newDeck = this.shuffle(newDeck);
+    for (let x = 0; x < newDeck.length; x++) {
+      if (x < 13) {
+        newDeck[x].push([`../../../src/images/Cards/${x+1}H`])
+        }
+      if (x > 12 && x < 26) {
+        newDeck[x].push([`../../../src/images/Cards/${x+1}S`])
+      }
+      if (x > 25 && x < 49) {
+        newDeck[x].push([`../../../src/images/Cards/${x+1}C`])
+      }
+      if (x > 48){
+        newDeck[x].push([`../../../src/images/Cards/${x+1}D`])
+      }
+    }
 
-    console.log(newDeck);
+    newDeck = this.shuffle(newDeck);
+    
     this.props.dispatch(deck(newDeck));
 
   }
@@ -54,6 +74,7 @@ class Deck extends Component {
   render() {
     return(
       <div>
+        <Hand />
         <button onClick={this.createNewDeck}>Deal Cards</button>
       </div>
     );

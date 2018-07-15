@@ -6,7 +6,7 @@ const deck = (state = {}, action) => {
     case TABLE_ACTIONS.NEW_DECK:
       return {
         ...state,
-        deck: action.payload,
+        deck: action.payload.newDeck,
       };
     default:
       return state;

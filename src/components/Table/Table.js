@@ -7,6 +7,7 @@ import Deck from '../Deck/Deck';
 
 const mapStateToProps = state => ({
   user: state.user,
+  table: state.table,
 });
 
 class Table extends Component {
@@ -20,6 +21,8 @@ class Table extends Component {
 
   test = () => {
     console.log('hello');
+    console.log(this.props.user);
+    console.log(this.props.table.deck.deck);
   }
 
   deal = () => {
