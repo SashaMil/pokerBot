@@ -12,47 +12,14 @@ const mapStateToProps = state => ({
 class Table extends Component {
   constructor() {
     super();
-
-    this.state = {
-      deck: []
-    }
-
-
   }
 
   componentDidMount = () => {
-    this.createNewDeck();
+
   }
 
-  createNewDeck = () => {
-    const suits = ['Hearts', 'Spades', 'Clubs', 'Diamonds'];
-    const values = ['Ace', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King'];
-
-    let newDeck = [];
-
-    for (let suit in suits) {
-        for (let value in values) {
-          newDeck.push(`${values[value]} of ${suits[suit]}`);
-        }
-    }
-
-    this.shuffle(newDeck);
-
-    this.setState({deck: [... newDeck]});
-    console.log(this.state.deck);
-  }
-
-  shuffle = (deck) => {
-      let m = deck.length, i;
-
-      // While there remain elements to shuffle…
-      while (m) {
-          i = Math.floor(Math.random() * m--);
-          // And swap it with the current element.
-          [deck[m], deck[i]] = [deck[i], deck[m]];
-      }
-
-      return this;
+  test = () => {
+    console.log('hello');
   }
 
   deal = () => {
@@ -63,7 +30,7 @@ class Table extends Component {
     return(
       <div>
         <Deck />
-          <div>{this.state.deck}</div>
+        <button onClick={this.test}>Testing</button>
       </div>
 
 
