@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import BetSizing from '../BetSizing/BetSizing';
 import { deck } from '../../redux/actions/tableActions';
 import { deal } from '../../redux/actions/tableActions';
 import { withStyles } from '@material-ui/core/styles';
@@ -35,13 +36,14 @@ class PlayerController extends Component {
     super();
 
     this.state = {
-      smallBlind: true,
+      smallBlind: false,
     }
   }
 
   fold = () => {
     this.props.dispatch(deck());
     this.props.dispatch(deal());
+
   }
 
   componentDidMount = () => {
@@ -73,11 +75,17 @@ class PlayerController extends Component {
               <Button onClick={this.fold} variant="contained" color="secondary" className={styles.button}>
                 Fold
               </Button>
-              <Button variant="fab" color="primary" className={styles.button}>
+              <Button variant="contained" color="default" className={styles.button}>
+                Check
+              </Button>
+              <Button variant="contained" color="primary" className={styles.button}>
                 Bet
               </Button>
             </div>
           )}
+          <div>
+            <BetSizing />
+          </div>
       </div>
     );
   };

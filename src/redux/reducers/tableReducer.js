@@ -3,6 +3,8 @@ import { TABLE_ACTIONS } from '../actions/tableActions';
 
 const cards = (state = {}, action) => {
 
+  let reduceDeck = '';
+
   switch (action.type) {
     case TABLE_ACTIONS.NEW_DECK:
 
@@ -64,7 +66,7 @@ const cards = (state = {}, action) => {
       };
 
     case TABLE_ACTIONS.DEAL:
-      let reduceDeck = state.deck;
+      reduceDeck = state.deck;
       let playerCard1 = reduceDeck.pop();
       let computerCard1 = reduceDeck.pop();
       let playerCard2 = reduceDeck.pop();
@@ -76,8 +78,51 @@ const cards = (state = {}, action) => {
         deck: reduceDeck,
       }
 
+    case TABLE_ACTIONS.FLOP:
+      reduceDeck = state.deck;
+      let flop = [];
+      for (let x = 0; x < 3; x++) {
+        flop.push(reduceDeck.pop());
+      }
+      return {
+        ... state,
+        deck: reduceDeck,
+        flop: flop,
+      }
+
+    case TABLE_ACTIONS.TURN:
+      reduceDeck = state.deck;
+      let turn = [];
+      turn.push(reduceDeck.pop());
+      return {
+        ... state,
+        deck: reduceDeck,
+        turn: turn,
+      }
+
+    case TABLE_ACTIONS.RIVER:
+      reduceDeck = state.deck;
+      let river = [];
+      river.push(reduceDeck.pop());
+      return {
+        ... state,
+        deck: reduceDeck,
+        river: river,
+      }
 
 
+    default:
+      return state;
+  }
+};
+
+const chips = (state = {playerChips: 1500, computerChips: 1500}, action) => {
+  switch (action.type) {
+    case TABLE_ACTIONS.CHANGE_CHIPS:
+      return {
+        ...state,
+        state
+      };
     default:
       return state;
   }
@@ -99,4 +144,5 @@ const test = (state = {}, action) => {
 export default combineReducers({
   cards,
   test,
+  chips
 });

@@ -6,6 +6,7 @@ import Deck from '../Deck/Deck';
 import PlayerHand from '../PlayerHand/PlayerHand';
 import ComputerHand from '../ComputerHand/ComputerHand';
 import PlayerController from '../PlayerController/PlayerController';
+import Street from '../Street/Street'
 import { deal } from '../../redux/actions/tableActions';
 
 
@@ -19,7 +20,7 @@ class Table extends Component {
     super();
 
     this.state = {
-      newGame: true,
+      newGame: false,
     }
   }
 
@@ -29,11 +30,13 @@ class Table extends Component {
 
   deal = () => {
     this.isNewGame();
-     this.props.dispatch(deal());
+    this.props.dispatch(deal());
   }
 
   isNewGame = () => {
-    this.setState({newGame: false});
+    this.setState(prevState => ({
+      newGame: !prevState.newGame
+    }))
   }
 
   render() {
@@ -49,13 +52,20 @@ class Table extends Component {
           <ComputerHand />
         </div>
         <div>
-          <PlayerController />
+          <Street />
         </div>
         <div>
           {this.state.newGame ? (
-            <button onClick={this.deal}>Start Game</button>
-          ) :(
+            <PlayerController />
+          ) : (
             <div></div>
+          )}
+        </div>
+        <div>
+          {this.state.newGame ? (
+            <div></div>
+          ) :(
+            <button onClick={this.deal}>Start Game</button>
           )}
         </div>
       </div>
