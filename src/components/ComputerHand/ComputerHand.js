@@ -7,7 +7,7 @@ const mapStateToProps = state => ({
   user: state.user,
 });
 
-class Hand extends Component {
+class ComputerHand extends Component {
   constructor() {
     super();
 
@@ -22,10 +22,8 @@ class Hand extends Component {
     return(
       <div>
       </div>
-
-
     );
   };
 }
 
-export default compose(connect(mapStateToProps))(Hand);
+export default compose(connect(mapStateToProps))(ComputerHand);

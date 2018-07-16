@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import {Link} from 'react-router-dom';
 import Deck from '../Deck/Deck';
-
+import PlayerHand from '../PlayerHand/PlayerHand';
+import ComputerHand from '../ComputerHand/ComputerHand';
+import { deal } from '../../redux/actions/tableActions';
 
 
 const mapStateToProps = state => ({
@@ -21,13 +23,12 @@ class Table extends Component {
   }
 
   test = () => {
-    console.log('hello');
-    console.log(this.props.user);
-    console.log(this.props.table.deck.deck);
+    this.deal();
+    console.log(this.props.table);
   }
 
   deal = () => {
-     return this.deck.pop();
+     this.props.dispatch(deal());
   }
 
   render() {
@@ -35,6 +36,12 @@ class Table extends Component {
       <div>
         <div>
           <Deck />
+        </div>
+        <div>
+          <PlayerHand />
+        </div>
+        <div>
+          <ComputerHand />
         </div>
         <button onClick={this.test}>Testing</button>
       </div>

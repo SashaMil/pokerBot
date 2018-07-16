@@ -1,11 +1,6 @@
 export const TABLE_ACTIONS = {
   NEW_DECK: 'NEW_DECK',
-  SET_USER: 'SET_USER_ACTION',
-  UNSET_USER: 'UNSET_USER_ACTION',
-  REQUEST_START: 'REQUEST_START_USER_ACTION',
-  REQUEST_DONE: 'REQUEST_DONE_USER_ACTION',
-  LOGOUT: 'LOGOUT',
-  USER_FETCH_FAILED: 'USER_FETCH_FAILED',
+  DEAL: 'DEAL',
 };
 
 export const deck = (newDeck) => ({
@@ -13,4 +8,8 @@ export const deck = (newDeck) => ({
   payload: {
     newDeck
   },
+});
+
+export const deal = () => ({
+  type: TABLE_ACTIONS.DEAL,
 });

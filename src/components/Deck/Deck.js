@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { deck } from '../../redux/actions/tableActions';
 import image3 from '../../../src/images/if_Avatar_500621.png';
-import Hand from '../Hand/Hand';
 
 
 
@@ -28,8 +27,6 @@ class Deck extends Component {
     ['8', [8]], ['9', [9]], ['10', [10]], ['Jack', [11]], ['Queen', [12]], ['King', [13]]];
     const imageSuits = ['H', 'S', 'C', 'D'];
 
-
-
     let newDeck = [];
 
     for (let suit in suits) {
@@ -38,24 +35,33 @@ class Deck extends Component {
         }
     }
 
-    for (let x = 0; x < newDeck.length; x++) {
-      if (x < 13) {
-        newDeck[x].push([`../../../src/images/Cards/${x+1}H.png`])
-        }
-      if (x > 12 && x < 26) {
-        newDeck[x].push([`../../../src/images/Cards/${x+1}S.png`])
-      }
-      if (x > 25 && x < 49) {
-        newDeck[x].push([`../../../src/images/Cards/${x+1}C.png`])
-      }
-      if (x > 48){
-        newDeck[x].push([`../../../src/images/Cards/${x+1}D.png`])
-      }
+    console.log('Unicorn', newDeck);
+
+    let allHearts = newDeck.filter(x => x[0].includes('Hearts'));
+    for (let x = 0; x < allHearts.length; x++) {
+      allHearts[x].push([`../../../src/images/Cards/${x+1}H.png`]);
     }
 
-    newDeck = this.shuffle(newDeck);
+    let allSpades = newDeck.filter(x => x[0].includes('Spades'));
+    for (let x = 0; x < allSpades.length; x++) {
+      allSpades[x].push([`../../../src/images/Cards/${x+1}S.png`]);
+    }
 
-    this.props.dispatch(deck(newDeck));
+    let allClubs = newDeck.filter(x => x[0].includes('Clubs'));
+    for (let x = 0; x < allClubs.length; x++) {
+      allClubs[x].push([`../../../src/images/Cards/${x+1}C.png`]);
+    }
+
+    let allDiamonds = newDeck.filter(x => x[0].includes('Diamonds'));
+    for (let x = 0; x < allDiamonds.length; x++) {
+      allDiamonds[x].push([`../../../src/images/Cards/${x+1}D.png`]);
+    }
+
+    let finalDeck = allHearts.concat(allSpades, allClubs, allDiamonds);
+
+    finalDeck = this.shuffle(finalDeck);
+
+    this.props.dispatch(deck(finalDeck));
 
   }
 
@@ -76,7 +82,6 @@ class Deck extends Component {
     return(
       <div>
         <div>
-          <Hand />
         </div>
         <button onClick={this.createNewDeck}>Deal Cards</button>
       </div>
