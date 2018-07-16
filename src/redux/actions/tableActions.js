@@ -5,9 +5,6 @@ export const TABLE_ACTIONS = {
 
 export const deck = (newDeck) => ({
   type: TABLE_ACTIONS.NEW_DECK,
-  payload: {
-    newDeck
-  },
 });
 
 export const deal = () => ({

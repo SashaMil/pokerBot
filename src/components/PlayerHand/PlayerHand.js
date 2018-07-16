@@ -21,7 +21,6 @@ const PlayerHand = ({ table }) => {
   }
   return (
     <div>
-      <button>Howdy</button>
     </div>
   )
 

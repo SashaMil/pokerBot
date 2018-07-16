@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 import Deck from '../Deck/Deck';
 import PlayerHand from '../PlayerHand/PlayerHand';
 import ComputerHand from '../ComputerHand/ComputerHand';
+import PlayerController from '../PlayerController/PlayerController';
 import { deal } from '../../redux/actions/tableActions';
 
 
@@ -16,19 +17,23 @@ const mapStateToProps = state => ({
 class Table extends Component {
   constructor() {
     super();
+
+    this.state = {
+      newGame: true,
+    }
   }
 
   componentDidMount = () => {
 
   }
 
-  test = () => {
-    this.deal();
-    console.log(this.props.table);
+  deal = () => {
+    this.isNewGame();
+     this.props.dispatch(deal());
   }
 
-  deal = () => {
-     this.props.dispatch(deal());
+  isNewGame = () => {
+    this.setState({newGame: false});
   }
 
   render() {
@@ -43,7 +48,16 @@ class Table extends Component {
         <div>
           <ComputerHand />
         </div>
-        <button onClick={this.test}>Testing</button>
+        <div>
+          <PlayerController />
+        </div>
+        <div>
+          {this.state.newGame ? (
+            <button onClick={this.deal}>Start Game</button>
+          ) :(
+            <div></div>
+          )}
+        </div>
       </div>
 
 

@@ -14,14 +14,13 @@ const PlayerHand = ({ table }) => {
   if (table.cards.playerHand !== undefined) {
     return (
       <div>
-        <img width='200px' src={'images/Cards/gray_back.png'} />
-        <img width='200px' src={'images/Cards/gray_back.png'} />
+        <img width='200px' src={'images/Cards/purple_back.png'} />
+        <img width='200px' src={'images/Cards/purple_back.png'} />
       </div>
     )
   }
   return (
     <div>
-      <button>Howdy</button>
     </div>
   )
 
