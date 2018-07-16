@@ -39,22 +39,22 @@ class Deck extends Component {
 
     let allHearts = newDeck.filter(x => x[0].includes('Hearts'));
     for (let x = 0; x < allHearts.length; x++) {
-      allHearts[x].push([`../../../src/images/Cards/${x+1}H.png`]);
+      allHearts[x].push([`images/Cards/${x+1}H.png`]);
     }
 
     let allSpades = newDeck.filter(x => x[0].includes('Spades'));
     for (let x = 0; x < allSpades.length; x++) {
-      allSpades[x].push([`../../../src/images/Cards/${x+1}S.png`]);
+      allSpades[x].push([`images/Cards/${x+1}S.png`]);
     }
 
     let allClubs = newDeck.filter(x => x[0].includes('Clubs'));
     for (let x = 0; x < allClubs.length; x++) {
-      allClubs[x].push([`../../../src/images/Cards/${x+1}C.png`]);
+      allClubs[x].push([`images/Cards/${x+1}C.png`]);
     }
 
     let allDiamonds = newDeck.filter(x => x[0].includes('Diamonds'));
     for (let x = 0; x < allDiamonds.length; x++) {
-      allDiamonds[x].push([`../../../src/images/Cards/${x+1}D.png`]);
+      allDiamonds[x].push([`images/Cards/${x+1}D.png`]);
     }
 
     let finalDeck = allHearts.concat(allSpades, allClubs, allDiamonds);

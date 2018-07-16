@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import {Link} from 'react-router-dom';
 
+
 const mapStateToProps = state => ({
   user: state.user,
   table: state.table,
@@ -11,10 +12,10 @@ const mapStateToProps = state => ({
 const PlayerHand = ({ table }) => {
 
   if (table.cards.playerHand !== undefined) {
-    let card1 = require(`${table.cards.playerHand[0][2]}`);
     return (
       <div>
-        <img src={card1} />
+        <img width='200px' src={table.cards.playerHand[0][2]} />
+        <img width='200px' src={table.cards.playerHand[1][2]} />
       </div>
     )
   }
