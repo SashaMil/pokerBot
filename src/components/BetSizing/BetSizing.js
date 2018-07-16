@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/lab/Slider';
 
 const styles = {
   root: {
-    width: 300,
+    width: 500,
   },
 };
 
@@ -18,28 +19,30 @@ const mapStateToProps = state => ({
 });
 
 class BetSizing extends Component {
-  constructor() {
-    super();
 
-    this.state = {
-      betAmount: 0,
-    }
-  }
+  state = {
+    value: 3,
+  };
 
-  handChange = (event,  value) => {
-    this.setState({value});
-  }
+  changeSlider = (event,  value) => {
+    console.log(value);
+    this.setState({value: value})
+  };
 
-  render()
+  render() {
     const { classes } = this.props;
     const { value } = this.state;
 
     return(
-      <div>
-
+      <div className={classes.root}>
+        <Slider value={value} min={10} max={1500} onChange={(event, value) => this.changeSlider(event,value)} />
       </div>
     );
-  };
+  }
 }
 
-export default compose(connect(mapStateToProps))(BetSizing);
+BetSizing.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default compose(withStyles(styles), connect(mapStateToProps))(BetSizing);

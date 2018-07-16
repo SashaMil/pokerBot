@@ -116,12 +116,17 @@ const cards = (state = {}, action) => {
   }
 };
 
-const chips = (state = {playerChips: 1500, computerChips: 1500}, action) => {
+const pot = (state = {pot: 0}, action) => {
+
+  let reducePot = 0;
+
   switch (action.type) {
-    case TABLE_ACTIONS.CHANGE_CHIPS:
+    case TABLE_ACTIONS.BET:
+      reducePot = state.pot;
+      reducePot += action.payload;
       return {
         ...state,
-        state
+        pot: reducePot,
       };
     default:
       return state;
@@ -144,5 +149,5 @@ const test = (state = {}, action) => {
 export default combineReducers({
   cards,
   test,
-  chips
+  pot,
 });

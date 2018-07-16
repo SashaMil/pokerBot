@@ -15,10 +15,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
-import image1 from '../../../src/images/if_Gear_599838.png';
-import image2 from '../../../src/images/if_Settings_2_500624.png';
-import image3 from '../../../src/images/if_Avatar_500621.png';
-
 
 const styles = theme => ({
   root: {
@@ -156,17 +152,17 @@ const styles2 = theme => ({
 
 const images = [
   {
-    url: image1,
+    url: 'images/if_Gear_599838.png',
     title: 'Stats',
     width: '33.3%',
   },
   {
-    url: image2,
+    url: 'images/if_Settings_2_500624.png',
     title: 'Leaderboard',
     width: '33.3%',
   },
   {
-    url: image3,
+    url: 'images/if_Settings_2_500624.png',
     title: 'New Game',
     width: '33.3%',
   },
@@ -174,17 +170,17 @@ const images = [
 
 const images2 = [
   {
-    url: image1,
+    url: 'images/if_Gear_599838.png',
     title: 'Preferences',
     width: '33.3%',
   },
   {
-    url: image2,
+    url: 'images/if_Settings_2_500624.png',
     title: 'Account Settings',
     width: '33.3%',
   },
   {
-    url: image3,
+    url: 'images/if_Settings_2_500624.png',
     title: 'Logout',
     width: '33.3%',
   },

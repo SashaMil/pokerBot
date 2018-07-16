@@ -4,6 +4,7 @@ export const TABLE_ACTIONS = {
   FLOP: 'FLOP',
   TURN: 'TURN',
   RIVER: 'RIVER',
+  BET: 'BET',
 };
 
 export const deck = () => ({
@@ -23,5 +24,12 @@ export const turn = () => ({
 })
 
 export const river = () => ({
-  type: TABLE_ACTIONS.RIVEr,
+  type: TABLE_ACTIONS.RIVER,
+})
+
+export const bet = (chips) => ({
+  type: TABLE_ACTIONS.BET,
+  payload: {
+    chips,
+  }
 })
