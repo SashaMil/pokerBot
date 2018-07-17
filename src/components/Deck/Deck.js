@@ -12,7 +12,6 @@ const mapStateToProps = state => ({
 class Deck extends Component {
 
   componentDidMount = () => {
-    this.props.dispatch(deck());
   }
 
   render() {

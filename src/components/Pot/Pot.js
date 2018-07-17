@@ -14,14 +14,15 @@ const mapStateToProps = state => ({
 class Pot extends Component {
   constructor() {
     super();
+  }
 
   render() {
-
     return(
       <div>
+        <input value={this.props.table.pot.pot}></input>
       </div>
     );
-  };
+  }
 }
 
 export default compose(connect(mapStateToProps))(Pot);

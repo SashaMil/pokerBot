@@ -41,8 +41,8 @@ class PlayerController extends Component {
   }
 
   fold = () => {
-    this.props.dispatch(deck());
-    this.props.dispatch(deal());
+    // this.props.dispatch(deck());
+    // this.props.dispatch(deal());
 
   }
 
@@ -66,9 +66,6 @@ class PlayerController extends Component {
               <Button variant="contained" color="default" className={styles.button}>
                 Call
               </Button>
-              <Button variant="contained" color="primary" className={styles.cssRoot}>
-                Raise
-              </Button>
             </div>
           ) : (
             <div>
@@ -77,9 +74,6 @@ class PlayerController extends Component {
               </Button>
               <Button variant="contained" color="default" className={styles.button}>
                 Check
-              </Button>
-              <Button variant="contained" color="primary" className={styles.button}>
-                Bet
               </Button>
             </div>
           )}

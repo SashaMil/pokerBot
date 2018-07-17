@@ -1,18 +1,23 @@
 export const TABLE_ACTIONS = {
+  NEW_GAME: 'NEW_GAME',
+  SET_GAME: 'SET_GAME',
   NEW_DECK: 'NEW_DECK',
-  DEAL: 'DEAL',
   FLOP: 'FLOP',
   TURN: 'TURN',
   RIVER: 'RIVER',
   BET: 'BET',
 };
 
-export const deck = () => ({
-  type: TABLE_ACTIONS.NEW_DECK,
+export const newGame = () => ({
+  type: TABLE_ACTIONS.NEW_GAME,
 });
 
-export const deal = () => ({
-  type: TABLE_ACTIONS.DEAL,
+export const setGame = () => ({
+  type: TABLE_ACTIONS.SET_GAME,
+});
+
+export const newDeck = () => ({
+  type: TABLE_ACTIONS.NEW_DECK,
 });
 
 export const flop = () => ({

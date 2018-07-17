@@ -7,7 +7,8 @@ import PlayerHand from '../PlayerHand/PlayerHand';
 import ComputerHand from '../ComputerHand/ComputerHand';
 import PlayerController from '../PlayerController/PlayerController';
 import Street from '../Street/Street'
-import { deal } from '../../redux/actions/tableActions';
+import Pot from '../Pot/Pot';
+import { newGame } from '../../redux/actions/tableActions';
 
 
 const mapStateToProps = state => ({
@@ -28,49 +29,18 @@ class Table extends Component {
 
   }
 
-  deal = () => {
-    this.isNewGame();
-    this.props.dispatch(deal());
+  newGame = () => {
+    console.log('hello');
+    this.props.dispatch(newGame());
   }
 
-  isNewGame = () => {
-    this.setState(prevState => ({
-      newGame: !prevState.newGame
-    }))
-  }
+
 
   render() {
     return(
       <div>
-        <div>
-          <Deck />
-        </div>
-        <div>
-          <PlayerHand />
-        </div>
-        <div>
-          <ComputerHand />
-        </div>
-        <div>
-          <Street />
-        </div>
-        <div>
-          {this.state.newGame ? (
-            <PlayerController />
-          ) : (
-            <div></div>
-          )}
-        </div>
-        <div>
-          {this.state.newGame ? (
-            <div></div>
-          ) :(
-            <button onClick={this.deal}>Start Game</button>
-          )}
-        </div>
+        <button onClick={this.newGame}>Start Game</button>
       </div>
-
-
     );
   };
 }
