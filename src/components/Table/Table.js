@@ -25,21 +25,27 @@ class Table extends Component {
     }
   }
 
-  componentDidMount = () => {
-
-  }
-
   newGame = () => {
     console.log('hello');
     this.props.dispatch(newGame());
   }
 
-
-
   render() {
     return(
       <div>
-        <button onClick={this.newGame}>Start Game</button>
+        <div>
+          <button onClick={this.newGame}>Start Game</button>
+        </div>
+          {this.props.table.states ? (
+            <div>
+              <PlayerHand />
+            </div>
+          ) : (
+            <div>
+            </div>
+          )}
+        <div>
+        </div>
       </div>
     );
   };

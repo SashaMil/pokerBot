@@ -11,18 +11,13 @@ const mapStateToProps = state => ({
 
 const PlayerHand = ({ table }) => {
 
-  if (table.cards.playerHand !== undefined) {
-    return (
-      <div>
-        <img width='200px' src={table.cards.playerHand[0][2]} />
-        <img width='200px' src={table.cards.playerHand[1][2]} />
-      </div>
-    )
-  }
   return (
     <div>
+      <img width='200px' src={table.state.playerHand[0][2]} />
+      <img width='200px' src={table.state.playerHand[1][2]} />
     </div>
   )
+
 
 }
 
