@@ -4,7 +4,9 @@ import { compose } from 'redux';
 import {Link} from 'react-router-dom';
 import Deck from '../Deck/Deck';
 import PlayerHand from '../PlayerHand/PlayerHand';
+import PlayerChips from '../PlayerChips/PlayerChips';
 import ComputerHand from '../ComputerHand/ComputerHand';
+import ComputerChips from '../ComputerChips/ComputerChips';
 import PlayerController from '../PlayerController/PlayerController';
 import Street from '../Street/Street'
 import Pot from '../Pot/Pot';
@@ -36,16 +38,30 @@ class Table extends Component {
         <div>
           <button onClick={this.newGame}>Start Game</button>
         </div>
-          {this.props.table.states ? (
+          {this.props.table.state ? (
             <div>
-              <PlayerHand />
+              <div>
+                <ComputerHand />
+              </div>
+              <div>
+                <ComputerChips />
+              </div>
+              <div>
+                <Pot />
+              </div>
+              <div>
+                <PlayerHand />
+              </div>
+              <div>
+                <PlayerChips />
+              </div>
+              <div>
+                <PlayerController />
+              </div>
             </div>
           ) : (
-            <div>
-            </div>
+            null
           )}
-        <div>
-        </div>
       </div>
     );
   };

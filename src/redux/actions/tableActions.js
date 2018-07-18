@@ -5,7 +5,8 @@ export const TABLE_ACTIONS = {
   FLOP: 'FLOP',
   TURN: 'TURN',
   RIVER: 'RIVER',
-  BET: 'BET',
+  PLAYER_BET: 'PLAYER_BET',
+  PLAYER_FOLD: 'PLAYER_FOLD',
 };
 
 export const newGame = () => ({
@@ -14,6 +15,10 @@ export const newGame = () => ({
 
 export const setGame = () => ({
   type: TABLE_ACTIONS.SET_GAME,
+});
+
+export const playerFold = () => ({
+  type: TABLE_ACTIONS.PLAYER_FOLD,
 });
 
 export const newDeck = () => ({
@@ -32,7 +37,7 @@ export const river = () => ({
   type: TABLE_ACTIONS.RIVER,
 })
 
-export const bet = (chips) => ({
+export const playerBet = (chips) => ({
   type: TABLE_ACTIONS.BET,
   payload: {
     chips,

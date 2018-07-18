@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/lab/Slider';
 import Button from '@material-ui/core/Button';
-import { bet } from '../../redux/actions/tableActions';
+import { playerBet } from '../../redux/actions/tableActions';
 
 const styles = {
   root: {
@@ -34,8 +34,12 @@ class BetSizing extends Component {
   }
 
   bet = () => {
-    this.props.dispatch(bet(this.state.value));
+    // this.props.dispatch(playerBet(this.state.value));
     this.setState({value: 0});
+  }
+
+  raise = () => {
+    console.log('elephant time!');
   }
 
   render() {
@@ -49,7 +53,7 @@ class BetSizing extends Component {
         <Button variant="contained" color="primary" className={styles.button} onClick={this.bet}>
           Bet
         </Button>
-        <Button variant="contained" color="primary" className={styles.cssRoot} onClick={this.bet}>
+        <Button variant="contained" color="primary" className={styles.cssRoot} onClick={this.raise}>
           Raise
         </Button>
       </div>
