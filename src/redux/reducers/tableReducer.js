@@ -13,4 +13,5 @@ const table = (state = {}, action) => {
   }
 };
 
+
 export default table;

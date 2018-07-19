@@ -1,6 +1,7 @@
 export const TABLE_ACTIONS = {
   NEW_GAME: 'NEW_GAME',
   SET_GAME: 'SET_GAME',
+  NEW_HAND: 'NEW_HAND',
   NEW_DECK: 'NEW_DECK',
   FLOP: 'FLOP',
   TURN: 'TURN',
@@ -9,13 +10,21 @@ export const TABLE_ACTIONS = {
   PLAYER_FOLD: 'PLAYER_FOLD',
 };
 
-export const newGame = () => ({
+export const newGame = (difficultySelected, userId) => ({
   type: TABLE_ACTIONS.NEW_GAME,
+  payload: {
+    difficultySelected,
+    userId,
+  }
 });
 
 export const setGame = () => ({
   type: TABLE_ACTIONS.SET_GAME,
 });
+
+// export const newHand = () => ({
+//   type: TABLE_ACTIONS.NEW_HAND,
+// });
 
 export const playerFold = () => ({
   type: TABLE_ACTIONS.PLAYER_FOLD,

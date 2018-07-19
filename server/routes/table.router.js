@@ -5,43 +5,15 @@ const Deck = require('../modules/deck.js')
 
 let computerType = 'Normal';
 
-let gameInfo = {};
-
-/**
- * GET route template
- */
-router.get('/newGame', (req, res) => {
-  // Creating new instantiation from Deck class and using shuffling method to randomize
-  let deck = new Deck;
-  deck.shuffle();
-  // Dealing cards as you would in person
-  let playerHand = [];
-  let computerHand = [];
-  playerHand.push(deck.deal());
-  computerHand.push(deck.deal());
-  playerHand.push(deck.deal());
-  computerHand.push(deck.deal());
-  // Sending back newGame newGameInfo
-  let arr = [true, false];
-  let bool = arr[Math.floor(Math.random() * (2))];
-
-  gameInfo = {playerHand: playerHand, computerHand: computerHand, playerChips: 1495, computerChips: 1490, pot: 0, playerSb: bool};
-
-
-
-  const queryText = `INSERT INTO game (computer_type)
-                    Values
-                    ($1)`;
-  pool.query(queryText, [computerType])
+router.post('/newGame', (req, res) => {
+  console.log('dinosaur time', req.body);
+  const queryText = `INSERT INTO game (computer_type, user_id)
+                    Values ($1, $2)
+                    RETURNING id;`;
+  return pool.query(queryText, [req.body.difficulty, req.body.userId])
     .then((result) => {
-      if (bool) {
-        res.send({playerHand: playerHand, playerChips: 1495, computerChips: 1490, pot: 0, playerSb: bool});
-        // createNewHand(newGameInfo);
-      }
-      else {
-        res.send({playerHand: playerHand, playerChips: 1495, computerChips: 1490, pot: 0, playerSb: bool});
-        // createNewHand(newGameInfo);
-      }
+      console.log(result.rows);
+      res.send(result.rows);
     })
     .catch((error) => {
       console.log('Error handling newGameRequest', error);
@@ -50,29 +22,57 @@ router.get('/newGame', (req, res) => {
 
 });
 
-router.get('/newHand', (req, res) => {
-  console.log(gameInfo);
-  const queryText = `INSERT INTO hand (computer_chips, computer_hand, player_hand, player_chips, player_sb, pot)
-                    Values
-                    ($1, $2, $3, $4, $5, $6)`;
-  pool.query(queryText, [gameInfo.computerChips, gameInfo.computerHand, gameInfo.playerHand, gameInfo.playerChips, gameInfo.playerSb, gameInfo.pot])
+router.get('/getHand/:id', (req, res) => {
+  console.log('elephant', req.params.id);
+  let id = req.params.id;
+  const queryText = `SELECT player_chips, computer_chips, pot, game_id, player_card_1, player_card_2 FROM hand WHERE id=$1`
+  pool.query(queryText, [id])
     .then((result) => {
-      console.log('Finished creating new hand');
-      res.sendStatus(200);
+      console.log('Successfully got hand details', result.rows);
+      res.send(result.rows);
     })
     .catch((error) => {
-      console.log('Error creating new hand in db', error);
+      console.log('Error sending hand details', error);
       res.sendStatus(500);
     })
-})
-
-
-
-/**
- * POST route template
- */
-router.post('/', (req, res) => {
 
 });
 
+router.post('/newHand', (req, res) => {
+  // console.log('giraffe', req.body.id[0].id);
+  let deck = new Deck;
+  deck.shuffle();
+  // Dealing cards as you would in person
+  let computerCard1 = deck.deal();
+  let playerCard1 = deck.deal();
+  let computerCard2 = deck.deal();
+  let playerCard2 = deck.deal();
+
+  let arr = [true, false];
+  let bool = arr[Math.floor(Math.random() * (2))];
+  const queryText = `INSERT INTO hand (computer_chips, computer_card_1, player_card_1, computer_card_2, player_card_2, player_chips, player_sb, pot, game_id, deck)
+                    Values
+                    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+                    RETURNING id`;
+  if (bool) {
+    pool.query(queryText, [1490, computerCard1, playerCard1, computerCard2, playerCard2, 1495, bool, 15, req.body.id[0].id, JSON.stringify(deck.deck)])
+      .then((result) => {
+        res.send(result.rows);
+      })
+      .catch((error) => {
+        res.sendStatus(500);
+      })
+  } else {
+    pool.query(queryText, [1495, computerCard1, playerCard1, computerCard2, playerCard2, 1490, bool, 15, req.body.id[0].id, deck])
+      .then((result) => {
+        res.send(result.rows);
+      })
+      .catch((error) => {
+        res.sendStatus(500);
+      })
+  }
+
+
+
+});
 module.exports = router;

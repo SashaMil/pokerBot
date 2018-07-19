@@ -11,6 +11,8 @@ import PlayerController from '../PlayerController/PlayerController';
 import Street from '../Street/Street'
 import Pot from '../Pot/Pot';
 import { newGame } from '../../redux/actions/tableActions';
+import { USER_ACTIONS } from '../../redux/actions/userActions';
+
 
 
 const mapStateToProps = state => ({
@@ -27,9 +29,13 @@ class Table extends Component {
     }
   }
 
+  componentDidMount = () => {
+    this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
+  }
+
   newGame = () => {
     console.log('hello');
-    this.props.dispatch(newGame());
+    this.props.dispatch(newGame('Normal', this.props.user.userId));
   }
 
   render() {
