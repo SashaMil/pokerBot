@@ -1,16 +1,19 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import { TABLE_ACTIONS } from '../actions/tableActions';
 import { newGameRequest } from '../requests/tableRequests';
-import { newHandRequest } from '../requests/tableRequests';
+import { firstHandRequest } from '../requests/tableRequests';
 import { getHandRequest } from '../requests/tableRequests';
 import { playerFoldRequest } from '../requests/tableRequests';
+import { newHandRequest } from '../requests/tableRequests';
+
+let currentGameInfo = '';
 
 function* newGame(action) {
   try {
     let newGameId = yield newGameRequest(action.payload);
-    let newHandId = yield newHandRequest(newGameId);
+    let newHandId = yield firstHandRequest(newGameId);
     console.log(newHandId);
-    let currentGameInfo = yield getHandRequest(newHandId[0].id);
+    currentGameInfo = yield getHandRequest(newHandId[0].id);
     console.log('dinosaurs', currentGameInfo);
     yield put({
       type: TABLE_ACTIONS.SET_GAME,
@@ -23,11 +26,18 @@ function* newGame(action) {
 
 function* playerFold(action) {
   try {
-    let newGameInfo = yield playerFoldRequest();
+    yield playerFoldRequest(action.payload);
+    currentGameInfo = yield getHandRequest(action.payload.handId);
+    console.log('cheetah', currentGameInfo);
     yield put({
       type: TABLE_ACTIONS.SET_GAME,
-      payload: newGameInfo,
-    });
+      payload: currentGameInfo,
+    })
+    currentGameInfo = yield newHandRequest(action.payload);
+    yield put({
+      type: TABLE_ACTIONS.SET_GAME,
+      payload: currentGameInfo,
+    })
   } catch (error) {
     console.log('GAME CRASHED -- WHOOPS', error);
   }

@@ -33,14 +33,10 @@ const mapStateToProps = state => ({
 class PlayerController extends Component {
   constructor() {
     super();
-
-    this.state = {
-      smallBlind: false,
-    }
   }
 
   fold = () => {
-    this.props.dispatch(playerFold());
+    this.props.dispatch(playerFold(this.props.table.state[0].id, this.props.table.state[0].pot, this.props.table.state[0].computer_chips));
   }
 
   componentDidMount = () => {
@@ -55,7 +51,7 @@ class PlayerController extends Component {
   render() {
     return(
       <div>
-          {this.props.table.state.playerSb ? (
+          {this.props.table.state[0].player_sb ? (
             <div>
               <Button onClick={this.fold} variant="contained" color="secondary" className={styles.button}>
                 Fold

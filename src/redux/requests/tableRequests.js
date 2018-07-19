@@ -12,8 +12,8 @@ export function newGameRequest(userInfo) {
     .catch((error) => { throw error.response || error; });
 };
 
-export function newHandRequest(newGameId) {
-  return axios.post('/table/newHand', {
+export function firstHandRequest(newGameId) {
+  return axios.post('/table/firstHand', {
     id: newGameId
   })
     .then(response => response.data)
@@ -27,8 +27,18 @@ export function getHandRequest(newHandId) {
     .catch((error) => { throw error.response || error; });
 }
 
-export function playerFoldRequest() {
-  return axios.get('/table/playerFold')
+export function playerFoldRequest(foldInfo) {
+  return axios.put('/logic/playerFold', {
+    foldInfo,
+  })
     .then(response => response.data)
     .catch((error) => {throw error.response || error; });
+}
+
+export function newHandRequest(currentGameInfo) {
+  return axios.post('/table/newHand', {
+    currentGameInfo
+  })
+    .then(response => response.data)
+    .catch((error) => { throw error.response || error});
 }
