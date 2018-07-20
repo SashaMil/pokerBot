@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/lab/Slider';
 import Button from '@material-ui/core/Button';
-import { playerBet } from '../../redux/actions/tableActions';
+import { playerRaisePreflop } from '../../redux/actions/tableActions';
 
 const styles = {
   root: {
@@ -34,12 +34,11 @@ class BetSizing extends Component {
   }
 
   bet = () => {
-    // this.props.dispatch(playerBet(this.state.value));
-    this.setState({value: 0});
+    // this.props.dispatch(playerBet(this.state.value, this.props.table.state[0]));
   }
 
   raise = () => {
-    console.log('elephant time!');
+    this.props.dispatch(playerRaisePreflop(this.state.value, this.props.table.state[0]));
   }
 
   render() {
@@ -48,14 +47,21 @@ class BetSizing extends Component {
 
     return(
       <div className={classes.root}>
-        <Slider value={value} min={10} max={1500} step={1} onChange={(event, value) => this.changeSlider(event,value)} />
-        <input value={this.state.value} />
-        <Button variant="contained" color="primary" className={styles.button} onClick={this.bet}>
-          Bet
-        </Button>
-        <Button variant="contained" color="primary" className={styles.cssRoot} onClick={this.raise}>
-          Raise
-        </Button>
+        {this.props.table.state[0].flop && this.props.table.state[0].playerSb ? (
+          <div>
+            <Button variant="contained" color="primary" className={styles.button} onClick={this.bet}>
+              Bet
+            </Button>
+          </div>
+        ) : (
+          <div>
+            <Slider value={value} min={10} max={1500} step={1} onChange={(event, value) => this.changeSlider(event,value)} />
+            <input value={this.state.value} />
+            <Button variant="contained" color="primary" className={styles.cssRoot} onClick={this.raise}>
+              Raise
+            </Button>
+          </div>
+        )}
       </div>
     );
   }

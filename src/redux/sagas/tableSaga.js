@@ -5,6 +5,7 @@ import { firstHandRequest } from '../requests/tableRequests';
 import { getHandRequest } from '../requests/tableRequests';
 import { playerFoldRequest } from '../requests/tableRequests';
 import { postNewHandRequest } from '../requests/tableRequests';
+import { playerRaisePreflopRequest } from '../requests/tableRequests';
 
 let currentGameInfo = '';
 let newHandId = 0;
@@ -43,9 +44,19 @@ function* playerFold(action) {
   }
 }
 
+function* playerRaisePreflop(action) {
+  try {
+    yield playerRaisePreflopRequest(action.payload);
+  }
+  catch(error) {
+    console.log('GAME CRASHED -- WHOOPS', error);
+  }
+}
+
 function* tableSaga() {
   yield takeLatest(TABLE_ACTIONS.NEW_GAME, newGame);
   yield takeLatest(TABLE_ACTIONS.PLAYER_FOLD, playerFold);
+  yield takeLatest(TABLE_ACTIONS.PLAYER_RAISE_PREFLOP, playerRaisePreflop);
   // yield takeLatest(LOGIN_ACTIONS.LOGOUT, logoutUser);
 }
 

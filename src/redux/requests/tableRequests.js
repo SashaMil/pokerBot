@@ -42,3 +42,17 @@ export function postNewHandRequest(currentGameInfo) {
     .then(response => response.data)
     .catch((error) => { throw error.response || error});
 }
+
+export function playerRaisePreflopRequest(betInfo) {
+  return axios.put('/logic/playerRaisePreflop', {
+    betInfo
+  })
+    .then(response => response.data)
+    .catch((error) => { throw error.response || error});
+}
+
+
+
+
+
+////////////

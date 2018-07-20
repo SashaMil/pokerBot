@@ -34,12 +34,12 @@ router.post('/firstHand', (req, res) => {
 
   let arr = [true, false];
   let bool = arr[Math.floor(Math.random() * (2))];
-  const queryText = `INSERT INTO hand (computer_chips, computer_card_1, player_card_1, computer_card_2, player_card_2, player_chips, player_sb, pot, game_id, deck)
+  const queryText = `INSERT INTO hand (computer_chips, computer_card_1, player_card_1, computer_card_2, player_card_2, player_chips, player_sb, pot, game_id, deck, flop, turn, river)
                     Values
-                    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+                    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
                     RETURNING id`;
   if (bool) {
-    pool.query(queryText, [1490, computerCard1, playerCard1, computerCard2, playerCard2, 1495, bool, 15, req.body.id[0].id, JSON.stringify(deck.deck)])
+    pool.query(queryText, [1490, computerCard1, playerCard1, computerCard2, playerCard2, 1495, bool, 15, req.body.id[0].id, JSON.stringify(deck.deck), '', '', ''])
       .then((result) => {
         res.send(result.rows);
       })
@@ -47,7 +47,7 @@ router.post('/firstHand', (req, res) => {
         res.sendStatus(500);
       })
   } else {
-    pool.query(queryText, [1495, computerCard1, playerCard1, computerCard2, playerCard2, 1490, bool, 15, req.body.id[0].id, JSON.stringify(deck.deck)])
+    pool.query(queryText, [1495, computerCard1, playerCard1, computerCard2, playerCard2, 1490, bool, 15, req.body.id[0].id, JSON.stringify(deck.deck), '', '', ''])
       .then((result) => {
         res.send(result.rows);
       })
@@ -60,7 +60,7 @@ router.post('/firstHand', (req, res) => {
   router.get('/getHand/:id', (req, res) => {
     console.log('elephant', req.params.id);
     let id = req.params.id;
-    const queryText = `SELECT player_chips, computer_chips, pot, game_id, player_card_1, player_card_2, player_sb, id FROM hand WHERE id=$1`
+    const queryText = `SELECT player_chips, computer_chips, pot, game_id, player_card_1, player_card_2, player_sb, flop, turn, river, id FROM hand WHERE id=$1`
     pool.query(queryText, [id])
       .then((result) => {
         console.log('Successfully got hand details', result.rows);
@@ -83,13 +83,13 @@ router.post('/firstHand', (req, res) => {
     let computerCard2 = deck.deal();
     let playerCard2 = deck.deal();
 
-    const queryText = `INSERT INTO hand (computer_chips, computer_card_1, player_card_1, computer_card_2, player_card_2, player_chips, player_sb, pot, game_id, deck)
+    const queryText = `INSERT INTO hand (computer_chips, computer_card_1, player_card_1, computer_card_2, player_card_2, player_chips, player_sb, pot, game_id, deck, flop, turn, river)
                       Values
-                      ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+                      ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
                       RETURNING id`;
 
     if (req.body.currentGameInfo.player_sb) {
-      pool.query(queryText, [req.body.currentGameInfo[0].computer_chips, computerCard1, playerCard1, computerCard2, playerCard2, req.body.currentGameInfo[0].player_chips, !req.body.currentGameInfo[0].player_sb, req.body.currentGameInfo[0].pot, req.body.currentGameInfo[0].game_id, JSON.stringify(deck.deck)])
+      pool.query(queryText, [req.body.currentGameInfo[0].computer_chips, computerCard1, playerCard1, computerCard2, playerCard2, req.body.currentGameInfo[0].player_chips, !req.body.currentGameInfo[0].player_sb, req.body.currentGameInfo[0].pot, req.body.currentGameInfo[0].game_id, JSON.stringify(deck.deck), '', '', ''])
         .then((result) => {
           res.send(result.rows);
         })
@@ -97,7 +97,7 @@ router.post('/firstHand', (req, res) => {
           res.sendStatus(500);
         })
     } else {
-      pool.query(queryText, [req.body.currentGameInfo[0].computer_chips, computerCard1, playerCard1, computerCard2, playerCard2, req.body.currentGameInfo[0].player_chips, !req.body.currentGameInfo[0].player_sb, req.body.currentGameInfo[0].pot, req.body.currentGameInfo[0].game_id, JSON.stringify(deck.deck)])
+      pool.query(queryText, [req.body.currentGameInfo[0].computer_chips, computerCard1, playerCard1, computerCard2, playerCard2, req.body.currentGameInfo[0].player_chips, !req.body.currentGameInfo[0].player_sb, req.body.currentGameInfo[0].pot, req.body.currentGameInfo[0].game_id, JSON.stringify(deck.deck), '', '', ''])
         .then((result) => {
           res.send(result.rows);
           console.log('success');
