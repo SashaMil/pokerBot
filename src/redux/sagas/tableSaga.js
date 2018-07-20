@@ -10,6 +10,7 @@ import { playerRaisePreflopRequest } from '../requests/tableRequests';
 let currentGameInfo = '';
 let newHandId = 0;
 let newGameId = 0;
+let playerRaiseOrBet = 0;
 
 function* newGame(action) {
   try {
@@ -46,7 +47,13 @@ function* playerFold(action) {
 
 function* playerRaisePreflop(action) {
   try {
+    console.log('birdStuff', action.payload.chips);
     yield playerRaisePreflopRequest(action.payload);
+    currentGameInfo = yield getHandRequest(action.payload.currentGameInfo.id)
+    yield put({
+      type: TABLE_ACTIONS.SET_GAME,
+      payload: currentGameInfo,
+    })
   }
   catch(error) {
     console.log('GAME CRASHED -- WHOOPS', error);
