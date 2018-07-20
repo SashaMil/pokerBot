@@ -3,10 +3,11 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 router.put('/playerFold', (req, res) => {
-
-  let id = req.body.foldInfo.id;
+  console.log(req.body);
+  let id = req.body.foldInfo.handId;
   let newPot = 0;
   let newComputerChips = req.body.foldInfo.computer_chips + req.body.foldInfo.pot;
+  console.log('monkeytime', newComputerChips, id, newPot);
 
   const queryText = `UPDATE hand SET pot=$2, computer_chips=$3 WHERE id=$1;`;
   pool.query(queryText, [id, newPot, newComputerChips])
