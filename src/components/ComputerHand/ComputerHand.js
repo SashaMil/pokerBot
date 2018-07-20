@@ -13,8 +13,8 @@ const PlayerHand = ({ table }) => {
 
   return (
     <div>
-      <img width='200px' src={'images/Cards/purple_back.png'} />
-      <img width='200px' src={'images/Cards/purple_back.png'} />
+      <img width='120px' src={'images/Cards/purple_back.png'} />
+      <img width='120px' src={'images/Cards/purple_back.png'} />
     </div>
   )
 }

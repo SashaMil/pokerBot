@@ -74,6 +74,7 @@ router.post('/firstHand', (req, res) => {
 
 
   router.post('/postNewHand', (req, res) => {
+    console.log(req.body);
     console.log('antelope', req.body.currentGameInfo[0].computer_chips);
     let deck = new Deck;
     deck.shuffle();
@@ -88,16 +89,17 @@ router.post('/firstHand', (req, res) => {
                       ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
                       RETURNING id`;
 
-    if (req.body.currentGameInfo.player_sb) {
-      pool.query(queryText, [req.body.currentGameInfo[0].computer_chips, computerCard1, playerCard1, computerCard2, playerCard2, req.body.currentGameInfo[0].player_chips, !req.body.currentGameInfo[0].player_sb, req.body.currentGameInfo[0].pot, req.body.currentGameInfo[0].game_id, JSON.stringify(deck.deck), '', '', ''])
+    if (req.body.currentGameInfo[0].player_sb) {
+      pool.query(queryText, [req.body.currentGameInfo[0].computer_chips - 10, computerCard1, playerCard1, computerCard2, playerCard2, req.body.currentGameInfo[0].player_chips - 5, !req.body.currentGameInfo[0].player_sb, req.body.currentGameInfo[0].pot + 15, req.body.currentGameInfo[0].game_id, JSON.stringify(deck.deck), '', '', ''])
         .then((result) => {
           res.send(result.rows);
+          console.log('hyena');
         })
         .catch((error) => {
           res.sendStatus(500);
         })
     } else {
-      pool.query(queryText, [req.body.currentGameInfo[0].computer_chips, computerCard1, playerCard1, computerCard2, playerCard2, req.body.currentGameInfo[0].player_chips, !req.body.currentGameInfo[0].player_sb, req.body.currentGameInfo[0].pot, req.body.currentGameInfo[0].game_id, JSON.stringify(deck.deck), '', '', ''])
+      pool.query(queryText, [req.body.currentGameInfo[0].computer_chips - 5, computerCard1, playerCard1, computerCard2, playerCard2, req.body.currentGameInfo[0].player_chips - 10, !req.body.currentGameInfo[0].player_sb, req.body.currentGameInfo[0].pot + 15, req.body.currentGameInfo[0].game_id, JSON.stringify(deck.deck), '', '', ''])
         .then((result) => {
           res.send(result.rows);
           console.log('success');
