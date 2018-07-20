@@ -72,6 +72,11 @@ router.post('/firstHand', (req, res) => {
       })
   });
 
+  // router.put('/flop', (req, res) => {
+  //   console.log('flop', req.body);
+  //
+  // })
+
 
   router.post('/postNewHand', (req, res) => {
     console.log(req.body);
