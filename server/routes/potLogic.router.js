@@ -42,6 +42,37 @@ router.put('/playerRaisePreflop', (req, res) => {
 
 });
 
+router.put('/computerCallPreflop', (req, res) => {
+
+  console.log('cheetahtime', req.body);
+  let computerCallAmount = req.body.computerAction[1];
+  let handId = req.body.computerAction[4];
+  let newComputerChips = req.body.computerAction[3] - computerCallAmount;
+  let newPot = req.body.computerAction[2] + computerCallAmount;
+
+  const queryText = `UPDATE hand SET pot=$2, computer_chips=$3 WHERE id=$1`;
+  pool.query(queryText, [handId, newPot, newComputerChips])
+    .then((result) => {
+      console.log('Finished changing db for computer call');
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log('Error making player bet');
+      res.sendStatus(500);
+    })
+  // const queryText = 'UPDATE hand SET pot=$2, player_chips=$3 WHERE id=$1';
+  // pool.query(queryText, [handId, newPot, newPlayerChips])
+    // .then((result) => {
+    //   console.log('Finished making player bet');
+    //   res.sendStatus(200);
+    // })
+    // .catch((error) => {
+    //   console.log('Error making player bet');
+    //   res.sendStatus(500);
+    // })
+
+});
+
 
 
 

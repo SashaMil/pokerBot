@@ -1,20 +1,67 @@
-function preflopComputerLogic (actionType, raiseAmount, position, computerChips, playerChips, computerCard1, computerCard2) {
+function preflopComputerLogic (actionType, playerBet, pot, computerChips, playerChips, computerCard1, computerCard2) {
 
-  const startingHands = [];
-  const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+  let possibleAces = formatPossibleAces(computerCard1, computerCard2);
+  computerCard1 = possibleAces[0];
+  computerCard2 = possibleAces[1];
+  console.log(computerCard1, computerCard2);
+  let handPoints = (evaluateHandPreflop(computerCard1, computerCard2));
 
-  for (let x = 0; x < values.length; x++) {
-      for (let y = 0; y < values.length; y++) {
-          startingHands.push(values[x]+values[y]);
-      }
+  if (handPoints === 0 && actionType === 'RAISE') {
+    return 'CALL';
   }
+  if (handPoints === 1  && actionType === 'RAISE') {
+    return 'CALL';
+  }
+  if (handPoints === 2 && actionType === 'RAISE') {
+    return 'CALL';
+  }
+  if (handPoints >= 3 && actionType === 'RAISE') {
+    return 'CALL';
+  }
+  // console.log(evaluateHandPreflop(computerCard1, computerCard2));
+  // return(evaluateHandPreflop(computerCard1, computerCard2));
 
-  return startingHands;
+}
 
+function evaluateHandPreflop(str1, str2) {
+  let handValue = 0;
+  // Sum of values of 20
+  if (parseInt(str1.slice(0, -1)) + parseInt(str2.slice(0,-1)) > 20) {
+    handValue += 3;
+  }
+  // Suits Match
+  if (str1[str1.length - 1] === str2[str2.length - 1]) {
+    handValue += 1;
+  }
+  // Cards Match
+  if (str1.slice(0, -1) === str2.slice(0, -1)) {
+    handValue += 3;
+  }
+  // Difference of only one
+  if (parseInt(str1.slice(0, -1)) - parseInt(str2.slice(0, -1)) === 1 || parseInt(str2.slice(0, -1)) - parseInt(str1.slice(0, -1)) === 1) {
+    handValue += 1;
+  }
+  return handValue;
+}
 
-  // if (actionType === 'playerBet') {
-  //
-  // }
+function formatPossibleAces(str1, str2) {
+  let result = [];
+  let newString1 = ''
+  let newString2 = '';
+
+  if (str1.length === 2 && str1[0] === '1') {
+    newString1 += '14' + str1[str1.length - 1];
+    result.push(newString1);
+  } else {
+    result.push(str1);
+  }
+  if (str2.length === 2 && str2[0] === '1') {
+    newString2 += '14' + str2[str2.length - 1];
+    result.push(newString2);
+  } else {
+    result.push(str2);
+  }
+  return result;
 }
 
 

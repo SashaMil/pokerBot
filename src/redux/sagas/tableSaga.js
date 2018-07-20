@@ -7,6 +7,7 @@ import { playerFoldRequest } from '../requests/tableRequests';
 import { postNewHandRequest } from '../requests/tableRequests';
 import { playerRaisePreflopRequest } from '../requests/tableRequests';
 import { computerPreflopRequest } from '../requests/tableRequests';
+import { computerCallPreflopRequest } from '../requests/tableRequests';
 
 let currentGameInfo = '';
 let newHandId = 0;
@@ -58,7 +59,16 @@ function* playerRaisePreflop(action) {
       type: TABLE_ACTIONS.SET_GAME,
       payload: currentGameInfo,
     })
-    // computerAction = yield computerPreflopRequest(playerRaiseOrBet, newHandId, 'RAISE');
+    computerAction = yield computerPreflopRequest(playerRaiseOrBet, newHandId, 'RAISE');
+    console.log('gazzelle', computerAction);
+    if (computerAction[0] === 'CALL') {
+      yield computerCallPreflopRequest(computerAction);
+    }
+    currentGameInfo = yield getHandRequest(action.payload.currentGameInfo.id);
+    yield put({
+      type: TABLE_ACTIONS.SET_GAME,
+      payload: currentGameInfo,
+    });
   }
   catch(error) {
     console.log('GAME CRASHED -- WHOOPS', error);

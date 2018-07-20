@@ -61,6 +61,14 @@ export function computerPreflopRequest(playerBetInfo, handId, action) {
     .catch((error) => { throw error.response || error});
 }
 
+export function computerCallPreflopRequest(computerAction) {
+  return axios.put('/potLogic/computerCallPreflop', {
+    computerAction,
+  })
+    .then(response => response.data)
+    .catch((error) => { throw error.response || error});
+}
+
 
 
 
