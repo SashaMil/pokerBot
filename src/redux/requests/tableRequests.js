@@ -35,8 +35,8 @@ export function playerFoldRequest(foldInfo) {
     .catch((error) => {throw error.response || error; });
 }
 
-export function newHandRequest(currentGameInfo) {
-  return axios.post('/table/newHand', {
+export function postNewHandRequest(currentGameInfo) {
+  return axios.post('/table/postNewHand', {
     currentGameInfo
   })
     .then(response => response.data)

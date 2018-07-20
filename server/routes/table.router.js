@@ -47,7 +47,7 @@ router.post('/firstHand', (req, res) => {
         res.sendStatus(500);
       })
   } else {
-    pool.query(queryText, [1495, computerCard1, playerCard1, computerCard2, playerCard2, 1490, bool, 15, req.body.id[0].id, deck])
+    pool.query(queryText, [1495, computerCard1, playerCard1, computerCard2, playerCard2, 1490, bool, 15, req.body.id[0].id, JSON.stringify(deck.deck)])
       .then((result) => {
         res.send(result.rows);
       })
@@ -73,8 +73,8 @@ router.post('/firstHand', (req, res) => {
   });
 
 
-  router.post('/newHand', (req, res) => {
-    console.log('antelope', req.body);
+  router.post('/postNewHand', (req, res) => {
+    console.log('antelope', req.body.currentGameInfo[0].computer_chips);
     let deck = new Deck;
     deck.shuffle();
     // Dealing cards as you would in person
@@ -83,15 +83,13 @@ router.post('/firstHand', (req, res) => {
     let computerCard2 = deck.deal();
     let playerCard2 = deck.deal();
 
-    let arr = [true, false];
-    let bool = arr[Math.floor(Math.random() * (2))];
     const queryText = `INSERT INTO hand (computer_chips, computer_card_1, player_card_1, computer_card_2, player_card_2, player_chips, player_sb, pot, game_id, deck)
                       Values
                       ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
                       RETURNING id`;
 
-    if (bool) {
-      pool.query(queryText, [req.body.currentGameInfo.computer_chips, computerCard1, playerCard1, computerCard2, playerCard2, req.body.currentGameInfo.player_chips, !bool, 15, req.body.id, JSON.stringify(deck.deck)])
+    if (req.body.currentGameInfo.player_sb) {
+      pool.query(queryText, [req.body.currentGameInfo[0].computer_chips, computerCard1, playerCard1, computerCard2, playerCard2, req.body.currentGameInfo[0].player_chips, !req.body.currentGameInfo[0].player_sb, req.body.currentGameInfo[0].pot, req.body.currentGameInfo[0].game_id, JSON.stringify(deck.deck)])
         .then((result) => {
           res.send(result.rows);
         })
@@ -99,7 +97,7 @@ router.post('/firstHand', (req, res) => {
           res.sendStatus(500);
         })
     } else {
-      pool.query(queryText, [req.body.currentGameInfo.computer_chips, computerCard1, playerCard1, computerCard2, playerCard2, req.body.currentGameInfo.player_chips, !bool, 15, req.body.id, JSON.stringify(deck.deck)])
+      pool.query(queryText, [req.body.currentGameInfo[0].computer_chips, computerCard1, playerCard1, computerCard2, playerCard2, req.body.currentGameInfo[0].player_chips, !req.body.currentGameInfo[0].player_sb, req.body.currentGameInfo[0].pot, req.body.currentGameInfo[0].game_id, JSON.stringify(deck.deck)])
         .then((result) => {
           res.send(result.rows);
           console.log('success');

@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import BetSizing from '../BetSizing/BetSizing';
-import { playerFold } from '../../redux/actions/tableActions'
+import { playerFold } from '../../redux/actions/tableActions';
+import { newHand } from '../../redux/actions/tableActions';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import purple from '@material-ui/core/colors/purple';
@@ -37,6 +38,7 @@ class PlayerController extends Component {
 
   fold = () => {
     this.props.dispatch(playerFold(this.props.table.state[0].id, this.props.table.state[0].pot, this.props.table.state[0].computer_chips));
+    console.log(this.props.table.state[0]);
   }
 
   componentDidMount = () => {

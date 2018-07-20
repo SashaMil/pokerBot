@@ -24,9 +24,12 @@ export const setGame = () => ({
   type: TABLE_ACTIONS.SET_GAME,
 });
 
-// export const newHand = () => ({
-//   type: TABLE_ACTIONS.NEW_HAND,
-// });
+export const newHand = (currentGameInfo) => ({
+  type: TABLE_ACTIONS.NEW_HAND,
+  payload: {
+    currentGameInfo,
+  }
+});
 
 export const playerFold = (handId, pot, computer_chips) => ({
   type: TABLE_ACTIONS.PLAYER_FOLD,

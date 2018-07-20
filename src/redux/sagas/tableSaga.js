@@ -4,14 +4,16 @@ import { newGameRequest } from '../requests/tableRequests';
 import { firstHandRequest } from '../requests/tableRequests';
 import { getHandRequest } from '../requests/tableRequests';
 import { playerFoldRequest } from '../requests/tableRequests';
-import { newHandRequest } from '../requests/tableRequests';
+import { postNewHandRequest } from '../requests/tableRequests';
 
 let currentGameInfo = '';
+let newHandId = 0;
+let newGameId = 0;
 
 function* newGame(action) {
   try {
-    let newGameId = yield newGameRequest(action.payload);
-    let newHandId = yield firstHandRequest(newGameId);
+    newGameId = yield newGameRequest(action.payload);
+    newHandId = yield firstHandRequest(newGameId);
     console.log(newHandId);
     currentGameInfo = yield getHandRequest(newHandId[0].id);
     console.log('dinosaurs', currentGameInfo);
@@ -29,11 +31,9 @@ function* playerFold(action) {
     yield playerFoldRequest(action.payload);
     currentGameInfo = yield getHandRequest(action.payload.handId);
     console.log('cheetah', currentGameInfo);
-    yield put({
-      type: TABLE_ACTIONS.SET_GAME,
-      payload: currentGameInfo,
-    })
-    currentGameInfo = yield newHandRequest(action.payload);
+    newHandId = yield postNewHandRequest(currentGameInfo);
+    currentGameInfo = yield getHandRequest(newHandId[0].id)
+
     yield put({
       type: TABLE_ACTIONS.SET_GAME,
       payload: currentGameInfo,
@@ -45,7 +45,7 @@ function* playerFold(action) {
 
 function* tableSaga() {
   yield takeLatest(TABLE_ACTIONS.NEW_GAME, newGame);
-  yield takeLatest(TABLE_ACTIONS.PLAYER_FOLD, playerFold)
+  yield takeLatest(TABLE_ACTIONS.PLAYER_FOLD, playerFold);
   // yield takeLatest(LOGIN_ACTIONS.LOGOUT, logoutUser);
 }
 
