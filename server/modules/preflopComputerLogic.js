@@ -3,9 +3,9 @@ function preflopComputerLogic (actionType, raiseAmount, position, computerChips,
   const startingHands = [];
   const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
 
-  for (let x = 0; x < arr.length; x++) {
-      for (let y = 0; y < arr.length; y++) {
-          startingHands.push(arr[x]+arr[y]);
+  for (let x = 0; x < values.length; x++) {
+      for (let y = 0; y < values.length; y++) {
+          startingHands.push(values[x]+values[y]);
       }
   }
 
@@ -22,4 +22,4 @@ function preflopComputerLogic (actionType, raiseAmount, position, computerChips,
 
 
 
-module.exports = computerDecision;
+module.exports = preflopComputerLogic;

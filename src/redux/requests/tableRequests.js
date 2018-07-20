@@ -28,7 +28,7 @@ export function getHandRequest(newHandId) {
 }
 
 export function playerFoldRequest(foldInfo) {
-  return axios.put('/logic/playerFold', {
+  return axios.put('/potLogic/playerFold', {
     foldInfo,
   })
     .then(response => response.data)
@@ -44,8 +44,18 @@ export function postNewHandRequest(currentGameInfo) {
 }
 
 export function playerRaisePreflopRequest(betInfo) {
-  return axios.put('/logic/playerRaisePreflop', {
+  return axios.put('/potLogic/playerRaisePreflop', {
     betInfo
+  })
+    .then(response => response.data)
+    .catch((error) => { throw error.response || error});
+}
+
+export function computerPreflopRequest(playerBetInfo, handId, action) {
+  return axios.post('/computerLogic/computerPreflop', {
+    playerBetInfo,
+    handId,
+    action,
   })
     .then(response => response.data)
     .catch((error) => { throw error.response || error});

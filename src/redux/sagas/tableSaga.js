@@ -6,11 +6,13 @@ import { getHandRequest } from '../requests/tableRequests';
 import { playerFoldRequest } from '../requests/tableRequests';
 import { postNewHandRequest } from '../requests/tableRequests';
 import { playerRaisePreflopRequest } from '../requests/tableRequests';
+import { computerPreflopRequest } from '../requests/tableRequests';
 
 let currentGameInfo = '';
 let newHandId = 0;
 let newGameId = 0;
 let playerRaiseOrBet = 0;
+let computerAction = '';
 
 function* newGame(action) {
   try {
@@ -48,12 +50,15 @@ function* playerFold(action) {
 function* playerRaisePreflop(action) {
   try {
     console.log('birdStuff', action.payload.chips);
+    playerRaiseOrBet = action.payload.chips;
+    newHandId = action.payload.currentGameInfo.id;
     yield playerRaisePreflopRequest(action.payload);
     currentGameInfo = yield getHandRequest(action.payload.currentGameInfo.id)
     yield put({
       type: TABLE_ACTIONS.SET_GAME,
       payload: currentGameInfo,
     })
+    // computerAction = yield computerPreflopRequest(playerRaiseOrBet, newHandId, 'RAISE');
   }
   catch(error) {
     console.log('GAME CRASHED -- WHOOPS', error);
