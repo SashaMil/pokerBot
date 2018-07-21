@@ -11,19 +11,14 @@ const mapStateToProps = state => ({
 
 const Flop = ({ table }) => {
 
-  if (table.cards.playerHand !== undefined) {
     return (
       <div>
-        <img width='200px' src={table.cards.flop[0][2]} />
-        <img width='200px' src={table.cards.playerHand[1][2]} />
-        <img width='200px' src={table.cards.playerHand[2][2]} />
+        <img width='120px' src={`images/Cards/${table.state[0].flop_card_1}.png`} />
+        <img width='120px' src={`images/Cards/${table.state[0].flop_card_2}.png`} />
+        <img width='120px' src={`images/Cards/${table.state[0].flop_card_3}.png`} />
       </div>
     )
-  }
-  return (
-    <div>
-    </div>
-  )
+
 
 }
 

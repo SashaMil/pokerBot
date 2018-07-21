@@ -27,6 +27,13 @@ export function getHandRequest(newHandId) {
     .catch((error) => { throw error.response || error; });
 }
 
+export function getFlopAndHandRequest(newHandId) {
+  return axios.get(`/table/getFlopAndHand/${newHandId}`, {
+  })
+    .then(response => response.data)
+    .catch((error) => { throw error.response || error; });
+}
+
 export function playerFoldRequest(foldInfo) {
   return axios.put('/potLogic/playerFold', {
     foldInfo,

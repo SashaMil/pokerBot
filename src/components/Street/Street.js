@@ -32,7 +32,7 @@ class Street extends Component {
       <div>
         <div>
             <div>
-              {this.props.table.cards.flop ? (
+              {this.props.table.state[0].flop_card_1 ? (
                 <Flop />
               ) :(
                 <div></div>

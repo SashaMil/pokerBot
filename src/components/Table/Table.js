@@ -53,6 +53,9 @@ class Table extends Component {
                 <ComputerChips />
               </div>
               <div>
+                <Street />
+              </div>
+              <div>
                 <Pot />
               </div>
               <div>

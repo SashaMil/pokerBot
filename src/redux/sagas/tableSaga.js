@@ -8,6 +8,7 @@ import { postNewHandRequest } from '../requests/tableRequests';
 import { playerRaisePreflopRequest } from '../requests/tableRequests';
 import { computerPreflopRequest } from '../requests/tableRequests';
 import { computerCallPreflopRequest } from '../requests/tableRequests';
+import { getFlopAndHandRequest } from '../requests/tableRequests';
 
 let currentGameInfo = '';
 let newHandId = 0;
@@ -64,7 +65,7 @@ function* playerRaisePreflop(action) {
     if (computerAction[0] === 'CALL') {
       yield computerCallPreflopRequest(computerAction);
     }
-    currentGameInfo = yield getHandRequest(action.payload.currentGameInfo.id);
+    currentGameInfo = yield getFlopAndHandRequest(action.payload.currentGameInfo.id);
     yield put({
       type: TABLE_ACTIONS.SET_GAME,
       payload: currentGameInfo,

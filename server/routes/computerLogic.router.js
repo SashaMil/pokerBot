@@ -13,7 +13,9 @@ router.post('/computerPreflop', (req, res) => {
       console.log('baboon time', result.rows);
       let computerAction = (preflopComputerLogic(playerAction, playerBet, result.rows[0].pot, result.rows[0].computer_chips, result.rows[0].player_chips, result.rows[0].computer_card_1, result.rows[0].computer_card_2));
       console.log(computerAction);
-      res.send(['CALL', playerBet, result.rows[0].pot, result.rows[0].computer_chips, result.rows[0].id, result.rows[0].deck]);
+      if (computerAction === 'CALL') {
+        res.send([computerAction, playerBet, result.rows[0].pot, result.rows[0].computer_chips, result.rows[0].id, result.rows[0].deck, result.rows[0].flop_card_1, result.rows[0].flop_card_2, result.rows[0].flop_card_3]);
+      }
     })
     .catch((error) => {
       res.sendStatus(500);
