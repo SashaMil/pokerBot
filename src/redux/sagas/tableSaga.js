@@ -6,9 +6,11 @@ import { getHandInfoRequest } from '../requests/tableRequests';
 import { playerFoldRequest } from '../requests/tableRequests';
 import { postNewHandRequest } from '../requests/tableRequests';
 import { playerBetRequest } from '../requests/tableRequests';
-import { computerPreflopRequest } from '../requests/tableRequests';
-import { computerCallPreflopRequest } from '../requests/tableRequests';
+import { computerPreflopDecisionRequest } from '../requests/tableRequests';
+import { computerCallRequest } from '../requests/tableRequests';
 import { getFlopAndHandRequest } from '../requests/tableRequests';
+import { computerFoldRequest } from '../requests/tableRequests';
+import { computerBetRequest } from '../requests/tableRequests';
 
 let gameInfo = '';
 let handId = 0;
@@ -62,16 +64,25 @@ function* computerPreflopReaction(action) {
         payload: gameInfo,
       })
     }
-    computerAction = yield computerPreflopRequest(betInfo, handId, playerAction);
-    if (computerAction[0] === 'CALL') {
-      yield computerCallPreflopRequest(computerAction);
-      gameInfo = yield getFlopAndHandRequest(action.payload.gameInfo.id);
+    computerAction = yield computerPreflopDecisionRequest(betInfo, handId, playerAction);
+    if (computerAction === 'CALL') {
+      yield computerCallRequest(betInfo, gameInfo);
+      gameInfo = yield getFlopAndHandRequest(handId);
     }
-    else if (computerAction[0] === 'FOLD') {
+    else if (computerAction === 'FOLD') {
       console.log('COMPUTER FOLD GOES HERE');
+      console.log(gameInfo);
+      yield computerFoldRequest(gameInfo);
+      gameInfo = yield getHandInfoRequest(handId);
+      handId = yield postNewHandRequest(gameInfo);
+      gameInfo = yield getHandInfoRequest(handId.id)
     }
-    else if (computerAction[0] === 'RAISE') {
+    else if (computerAction.computerAction === 'RAISE') {
       console.log('COMPUTER RAISE GOES HERE');
+
+      yield computerCallRequest(betInfo, gameInfo);
+      yield computerBetRequest(betInfo, gameInfo);
+      gameInfo = yield getHandInfoRequest(handId.id)
     }
     yield put({
       type: TABLE_ACTIONS.SET_GAME,

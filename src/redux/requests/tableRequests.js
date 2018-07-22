@@ -60,7 +60,7 @@ export function playerBetRequest(betInfo, gameInfo) {
     .catch((error) => { throw error.response || error});
 }
 
-export function computerPreflopRequest(playerBetInfo, handId, playerAction) {
+export function computerPreflopDecisionRequest(playerBetInfo, handId, playerAction) {
   return axios.post('/computerLogic/computerPreflop', {
     playerBetInfo: playerBetInfo,
     handId: handId,
@@ -70,12 +70,32 @@ export function computerPreflopRequest(playerBetInfo, handId, playerAction) {
     .catch((error) => { throw error.response || error});
 }
 
-export function computerCallPreflopRequest(computerAction) {
-  return axios.put('/potLogic/computerCallPreflop', {
-    computerAction,
+export function computerCallRequest(betInfo, gameInfo) {
+  return axios.put('/potLogic/computerCall', {
+    betInfo: betInfo,
+    gameInfo: gameInfo,
   })
     .then(response => response.data)
     .catch((error) => { throw error.response || error});
+}
+
+export function computerFoldRequest(foldInfo) {
+  return axios.put('/potLogic/computerFold', {
+    handId: foldInfo.id,
+    pot: foldInfo.pot,
+    playerChips: foldInfo.player_chips,
+  })
+    .then(response => response.data)
+    .catch((error) => { throw error.response || error });
+}
+
+export function computerBetRequest(betInfo, gameInfo) {
+  return axios.put('/potLogic/computerFold', {
+    betInfo: betInfo,
+    gameInfo: gameInfo,
+  })
+    .then(response => response.data)
+    .catch((error) => { throw error.response || error });
 }
 
 
