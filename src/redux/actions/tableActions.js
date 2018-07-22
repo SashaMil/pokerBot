@@ -9,6 +9,7 @@ export const TABLE_ACTIONS = {
   TURN: 'TURN',
   RIVER: 'RIVER',
   COMPUTER_PREFLOP_REACTION: 'COMPUTER_PREFLOP_REACTION',
+  COMPUTER_PREFLOP_ACTION: 'COMPUTER_PREFLOP_ACTION',
 };
 
 export const newGame = (difficultySelected, userId) => ({
@@ -65,12 +66,12 @@ export const computerPreflopReaction = (betInfo, gameInfo, playerAction) => ({
   }
 });
 
-// export const computerPreflopAction = (gameInfo) => ({
-//   type: TABLE_ACTIONS.COMPUTER_PREFLOP_ACTION,
-//   payload: {
-//     gameInfo,
-//   }
-// });
+export const computerPreflopAction = (gameInfo) => ({
+  type: TABLE_ACTIONS.COMPUTER_PREFLOP_ACTION,
+  payload: {
+    gameInfo,
+  }
+});
 
 
 

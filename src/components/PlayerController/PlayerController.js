@@ -8,6 +8,8 @@ import { newHand } from '../../redux/actions/tableActions';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import purple from '@material-ui/core/colors/purple';
+import { computerPreflopAction } from '../../redux/actions/tableActions';
+
 
 
 const styles = theme => ({
@@ -43,6 +45,12 @@ class PlayerController extends Component {
   componentDidMount = () => {
   }
 
+  componentDidUpdate = () => {
+    if (this.props.table.state.player_sb === false) {
+      this.props.dispatch(computerPreflopAction(this.props.table.state.id));
+    }
+  }
+
   render() {
     return(
       <div>
@@ -52,7 +60,7 @@ class PlayerController extends Component {
                 Fold
               </Button>
               <Button variant="contained" color="default" className={styles.button}>
-                Call
+                Check
               </Button>
             </div>
           ) : (
@@ -61,7 +69,7 @@ class PlayerController extends Component {
                 Fold
               </Button>
               <Button variant="contained" color="default" className={styles.button}>
-                Check
+                Call
               </Button>
             </div>
           )}

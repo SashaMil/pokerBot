@@ -40,26 +40,6 @@ router.put('/computerFold', (req, res) => {
 
 });
 
-router.put('/playerBet', (req, res) => {
-
-  let handId = req.body.gameInfo.id;
-  let playerBet = req.body.betInfo;
-  let newPot = playerBet + req.body.gameInfo.pot;
-  let newPlayerChips = req.body.gameInfo.player_chips - playerBet;
-
-  const queryText = 'UPDATE hand SET pot=$2, player_chips=$3 WHERE id=$1';
-  pool.query(queryText, [handId, newPot, newPlayerChips])
-    .then((result) => {
-      console.log('Finished making player bet');
-      res.sendStatus(200);
-    })
-    .catch((error) => {
-      console.log('Error making player bet');
-      res.sendStatus(500);
-    })
-
-});
-
 router.put('/computerCall', (req, res) => {
 
   let computerCallAmount = req.body.betInfo;
@@ -80,9 +60,43 @@ router.put('/computerCall', (req, res) => {
 
 });
 
+router.put('/playerBet', (req, res) => {
+
+  let handId = req.body.gameInfo.id;
+  let playerBet = req.body.betInfo;
+  let newPot = playerBet + req.body.gameInfo.pot;
+  let newPlayerChips = req.body.gameInfo.player_chips - playerBet;
+
+  const queryText = 'UPDATE hand SET pot=$2, player_chips=$3 WHERE id=$1';
+  pool.query(queryText, [handId, newPot, newPlayerChips])
+    .then((result) => {
+      console.log('Finished making player bet');
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log('Error making player bet');
+      res.sendStatus(500);
+    })
+
+});
+
 router.put('/computerBet', (req, res) => {
   console.log('Jay-Z', req.body);
-  
+  let handId = req.body.gameInfo.id;
+  let computerBet = req.body.betInfo;
+  let newPot = computerBet + req.body.gameInfo.pot;
+  let newComputerChips = req.body.gameInfo.computer_chips - computerBet;
+
+  const queryText = 'UPDATE hand SET pot=$2, computer_chips=$3 WHERE id=$1';
+  pool.query(queryText, [handId, newPot, newComputerChips])
+    .then((result) => {
+      console.log('Finished making computer bet');
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log('Error making computer bet');
+      res.sendStatus(500);
+    })
 })
 
 

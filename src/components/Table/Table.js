@@ -12,6 +12,8 @@ import Street from '../Street/Street'
 import Pot from '../Pot/Pot';
 import { newGame } from '../../redux/actions/tableActions';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
+import { computerPreflopAction } from '../../redux/actions/tableActions';
+
 
 
 
@@ -31,20 +33,19 @@ class Table extends Component {
 
   componentDidMount = () => {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
-  }
-
-
-
-  newGame = () => {
     this.props.dispatch(newGame('Normal', this.props.user.userId));
   }
+
+  componentDidUpdate(prevProps) {
+  // if (this.props.table.state.player_sb === false) {
+  //   this.props.dispatch(computerPreflopAction(this.props.table.state.id));
+  // }
+}
+
 
   render() {
     return(
       <div>
-        <div>
-          <button onClick={this.newGame}>Start Game</button>
-        </div>
           {this.props.table.state ? (
             <div>
               <div>
