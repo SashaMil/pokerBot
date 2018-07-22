@@ -43,10 +43,7 @@ class PlayerController extends Component {
   }
 
   componentDidMount = () => {
-  }
-
-  componentDidUpdate = () => {
-    if (this.props.table.state.player_sb === false) {
+    if (!this.props.table.state.player_action) {
       this.props.dispatch(computerPreflopAction(this.props.table.state.id));
     }
   }
@@ -54,7 +51,7 @@ class PlayerController extends Component {
   render() {
     return(
       <div>
-          {this.props.table.state.player_sb ? (
+          {this.props.table.state.player_action && !this.props.table.state.flop ? (
             <div>
               <Button onClick={this.fold} variant="contained" color="secondary" className={styles.button}>
                 Fold
@@ -65,10 +62,10 @@ class PlayerController extends Component {
             </div>
           ) : (
             <div>
-              <Button onClick={this.fold} variant="contained" color="secondary" className={styles.button}>
+              <Button onClick={this.fold} disabled={!this.props.table.state.player_action} variant="contained" color="secondary" className={styles.button}>
                 Fold
               </Button>
-              <Button variant="contained" color="default" className={styles.button}>
+              <Button disabled={!this.props.table.state.player_action} variant="contained" color="default" className={styles.button}>
                 Check
               </Button>
             </div>

@@ -36,11 +36,19 @@ class Table extends Component {
     this.props.dispatch(newGame('Normal', this.props.user.userId));
   }
 
-  componentDidUpdate(prevProps) {
-  // if (this.props.table.state.player_sb === false) {
-  //   this.props.dispatch(computerPreflopAction(this.props.table.state.id));
-  // }
-}
+  callComputerActions = () => {
+    this.props.dispatch(computerPreflopAction(this.props.table.state));
+  }
+
+  componentDidUpdate = (prevProps) => {
+    if (this.props.table.state !== prevProps.table.state && !this.props.table.state.player_action) {
+      this.props.dispatch(computerPreflopAction(this.props.table.state));
+    }
+  }
+
+
+
+
 
 
   render() {

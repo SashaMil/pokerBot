@@ -25,6 +25,7 @@ function* newGame(action) {
     gameId = yield newGameRequest(action.payload);
     handId = yield firstHandRequest(gameId.id);
     gameInfo = yield getHandInfoRequest(handId.id);
+    console.log(gameInfo);
     yield put({
       type: TABLE_ACTIONS.SET_GAME,
       payload: gameInfo,
@@ -98,7 +99,7 @@ function* computerPreflopReaction(action) {
 
 function* computerPreflopAction(action) {
   try {
-    console.log(action.payload);
+    handId = action.payload.gameInfo;
     computerAction = yield computerPreflopActionRequest(handId);
     console.log(computerAction);
     if (computerAction === 'CALL') {
