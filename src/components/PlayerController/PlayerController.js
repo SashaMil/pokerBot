@@ -60,7 +60,7 @@ class PlayerController extends Component {
                 Fold
               </Button>
               <Button variant="contained" color="default" className={styles.button}>
-                Check
+                Call
               </Button>
             </div>
           ) : (
@@ -69,7 +69,7 @@ class PlayerController extends Component {
                 Fold
               </Button>
               <Button variant="contained" color="default" className={styles.button}>
-                Call
+                Check
               </Button>
             </div>
           )}
