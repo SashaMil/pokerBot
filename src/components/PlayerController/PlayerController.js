@@ -44,7 +44,7 @@ class PlayerController extends Component {
 
   componentDidMount = () => {
     if (!this.props.table.state.player_action) {
-      this.props.dispatch(computerPreflopAction(this.props.table.state.id));
+      this.props.dispatch(computerPreflopAction(this.props.table.state));
     }
   }
 

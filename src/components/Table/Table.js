@@ -13,6 +13,8 @@ import Pot from '../Pot/Pot';
 import { newGame } from '../../redux/actions/tableActions';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 import { computerPreflopAction } from '../../redux/actions/tableActions';
+import Button from '@material-ui/core/Button';
+
 
 
 
@@ -31,29 +33,26 @@ class Table extends Component {
     }
   }
 
-  componentDidMount = () => {
+  startGame = () => {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
     this.props.dispatch(newGame('Normal', this.props.user.userId));
   }
 
-  callComputerActions = () => {
-    this.props.dispatch(computerPreflopAction(this.props.table.state));
-  }
-
   componentDidUpdate = (prevProps) => {
     if (this.props.table.state !== prevProps.table.state && !this.props.table.state.player_action) {
+      console.log('TESTING', this.props.table.state)
       this.props.dispatch(computerPreflopAction(this.props.table.state));
     }
   }
 
-
-
-
-
-
   render() {
     return(
       <div>
+        <div>
+          <Button color="secondary" onClick={this.startGame} disabled={this.props.table.state}>
+            Start Game
+          </Button>
+        </div>
           {this.props.table.state ? (
             <div>
               <div>

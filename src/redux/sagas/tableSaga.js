@@ -99,7 +99,9 @@ function* computerPreflopReaction(action) {
 
 function* computerPreflopAction(action) {
   try {
-    handId = action.payload.gameInfo;
+    console.log(action.payload);
+    handId = action.payload.gameInfo.id;
+    console.log('godzilla', handId);
     computerAction = yield computerPreflopActionRequest(handId);
     console.log(computerAction);
     if (computerAction === 'CALL') {

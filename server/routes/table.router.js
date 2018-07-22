@@ -85,7 +85,7 @@ router.post('/firstHand', (req, res) => {
   router.get('/getFlopAndHandInfo/:id', (req, res) => {
     console.log('moneytime', req.params.id);
     let id = req.params.id;
-    const queryText = `SELECT player_chips, computer_chips, pot, game_id, player_card_1, player_card_2, player_sb, flop_card_1, flop_card_2, flop_card_3, player_action id FROM  hand WHERE id=$1`
+    const queryText = `SELECT player_chips, computer_chips, pot, game_id, player_card_1, player_card_2, player_sb, flop_card_1, flop_card_2, flop_card_3, player_action, id FROM  hand WHERE id=$1`
     pool.query(queryText, [id])
       .then((result) => {
         console.log('Successfully got hand details', result.rows);
