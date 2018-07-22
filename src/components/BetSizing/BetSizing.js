@@ -38,7 +38,7 @@ class BetSizing extends Component {
   }
 
   raise = () => {
-    this.props.dispatch(playerRaisePreflop(this.state.value, this.props.table.state[0]));
+    this.props.dispatch(playerRaisePreflop(this.state.value, this.props.table.state));
   }
 
   render() {
@@ -47,7 +47,7 @@ class BetSizing extends Component {
 
     return(
       <div className={classes.root}>
-        {this.props.table.state[0].flop && this.props.table.state[0].playerSb ? (
+        {this.props.table.state.flop && this.props.table.state.playerSb ? (
           <div>
             <Button variant="contained" color="primary" className={styles.button} onClick={this.bet}>
               Bet

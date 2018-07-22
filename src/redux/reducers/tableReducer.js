@@ -4,7 +4,6 @@ import { TABLE_ACTIONS } from '../actions/tableActions';
 const table = (state = {}, action) => {
   switch (action.type) {
     case TABLE_ACTIONS.SET_GAME:
-      console.log(action.payload);
       return {
         state: action.payload,
       }

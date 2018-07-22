@@ -4,13 +4,12 @@ const router = express.Router();
 
 router.put('/playerFold', (req, res) => {
   console.log(req.body);
-  let id = req.body.foldInfo.handId;
+  let handId = req.body.handId;
   let newPot = 0;
-  let newComputerChips = req.body.foldInfo.computer_chips + req.body.foldInfo.pot;
-  console.log('monkeytime', newComputerChips, id, newPot);
+  let newComputerChips = req.body.computerChips + req.body.pot;
 
   const queryText = `UPDATE hand SET pot=$2, computer_chips=$3 WHERE id=$1;`;
-  pool.query(queryText, [id, newPot, newComputerChips])
+  pool.query(queryText, [handId, newPot, newComputerChips])
     .then((result) => {
       console.log('Finished folding player hand');
       res.sendStatus(200);
@@ -23,11 +22,11 @@ router.put('/playerFold', (req, res) => {
 });
 
 router.put('/playerRaisePreflop', (req, res) => {
-
-  let handId = req.body.betInfo.currentGameInfo.id;
-  let newPot = req.body.betInfo.chips + req.body.betInfo.currentGameInfo.pot;
-  let playerBet = req.body.betInfo.chips;
-  let newPlayerChips = req.body.betInfo.currentGameInfo.player_chips - playerBet;
+  console.log('Grizzly bear', req.body);
+  let handId = req.body.gameInfo.id;
+  let playerBet = req.body.betInfo;
+  let newPot = playerBet + req.body.gameInfo.pot;
+  let newPlayerChips = req.body.gameInfo.player_chips - playerBet;
 
   const queryText = 'UPDATE hand SET pot=$2, player_chips=$3 WHERE id=$1';
   pool.query(queryText, [handId, newPot, newPlayerChips])

@@ -13,9 +13,9 @@ const Flop = ({ table }) => {
 
     return (
       <div>
-        <img width='120px' src={`images/Cards/${table.state[0].flop_card_1}.png`} />
-        <img width='120px' src={`images/Cards/${table.state[0].flop_card_2}.png`} />
-        <img width='120px' src={`images/Cards/${table.state[0].flop_card_3}.png`} />
+        <img width='120px' src={`images/Cards/${table.state.flop_card_1}.png`} />
+        <img width='120px' src={`images/Cards/${table.state.flop_card_2}.png`} />
+        <img width='120px' src={`images/Cards/${table.state.flop_card_3}.png`} />
       </div>
     )
 

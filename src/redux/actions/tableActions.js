@@ -23,27 +23,27 @@ export const setGame = () => ({
   type: TABLE_ACTIONS.SET_GAME,
 });
 
-export const newHand = (currentGameInfo) => ({
+export const newHand = (gameInfo) => ({
   type: TABLE_ACTIONS.NEW_HAND,
   payload: {
-    currentGameInfo,
+    gameInfo,
   }
 });
 
-export const playerFold = (handId, pot, computer_chips) => ({
+export const playerFold = (handId, pot, computerChips) => ({
   type: TABLE_ACTIONS.PLAYER_FOLD,
   payload: {
     handId,
     pot,
-    computer_chips,
+    computerChips,
   }
 });
 
-export const playerRaisePreflop = (chips, currentGameInfo) => ({
+export const playerRaisePreflop = (betInfo, gameInfo) => ({
   type: TABLE_ACTIONS.PLAYER_RAISE_PREFLOP,
   payload: {
-    chips,
-    currentGameInfo
+    betInfo,
+    gameInfo,
   }
 });
 

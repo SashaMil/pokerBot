@@ -37,8 +37,7 @@ class PlayerController extends Component {
   }
 
   fold = () => {
-    this.props.dispatch(playerFold(this.props.table.state[0].id, this.props.table.state[0].pot, this.props.table.state[0].computer_chips));
-    console.log(this.props.table.state[0]);
+    this.props.dispatch(playerFold(this.props.table.state.id, this.props.table.state.pot, this.props.table.state.computer_chips));
   }
 
   componentDidMount = () => {
@@ -53,7 +52,7 @@ class PlayerController extends Component {
   render() {
     return(
       <div>
-          {this.props.table.state[0].player_sb ? (
+          {this.props.table.state.player_sb ? (
             <div>
               <Button onClick={this.fold} variant="contained" color="secondary" className={styles.button}>
                 Fold
