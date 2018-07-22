@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/lab/Slider';
 import Button from '@material-ui/core/Button';
-import { playerRaisePreflop } from '../../redux/actions/tableActions';
+import { computerPreflopReaction } from '../../redux/actions/tableActions';
 
 const styles = {
   root: {
@@ -38,7 +38,7 @@ class BetSizing extends Component {
   }
 
   raise = () => {
-    this.props.dispatch(playerRaisePreflop(this.state.value, this.props.table.state));
+    this.props.dispatch(computerPreflopReaction(this.state.value, this.props.table.state, 'RAISE'));
   }
 
   render() {

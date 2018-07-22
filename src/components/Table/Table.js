@@ -33,8 +33,9 @@ class Table extends Component {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
   }
 
+
+
   newGame = () => {
-    console.log('hello');
     this.props.dispatch(newGame('Normal', this.props.user.userId));
   }
 

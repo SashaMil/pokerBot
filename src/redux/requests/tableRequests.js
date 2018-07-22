@@ -51,8 +51,8 @@ export function postNewHandRequest(gameInfo) {
     .catch((error) => { throw error.response || error});
 }
 
-export function playerRaisePreflopRequest(betInfo, gameInfo) {
-  return axios.put('/potLogic/playerRaisePreflop', {
+export function playerBetRequest(betInfo, gameInfo) {
+  return axios.put('/potLogic/playerBet', {
     betInfo: betInfo,
     gameInfo: gameInfo,
   })
@@ -60,11 +60,11 @@ export function playerRaisePreflopRequest(betInfo, gameInfo) {
     .catch((error) => { throw error.response || error});
 }
 
-export function computerPreflopRequest(playerBetInfo, handId, action) {
+export function computerPreflopRequest(playerBetInfo, handId, playerAction) {
   return axios.post('/computerLogic/computerPreflop', {
-    playerBetInfo,
-    handId,
-    action,
+    playerBetInfo: playerBetInfo,
+    handId: handId,
+    playerAction: playerAction,
   })
     .then(response => response.data)
     .catch((error) => { throw error.response || error});

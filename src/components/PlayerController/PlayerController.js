@@ -43,12 +43,6 @@ class PlayerController extends Component {
   componentDidMount = () => {
   }
 
-  isSmallBlind = () => {
-    this.setState(prevState => ({
-      smallBlind: !prevState.smallBlind
-    }))
-  }
-
   render() {
     return(
       <div>

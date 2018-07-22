@@ -8,7 +8,7 @@ export const TABLE_ACTIONS = {
   FLOP: 'FLOP',
   TURN: 'TURN',
   RIVER: 'RIVER',
-  PLAYER_FOLD: 'PLAYER_FOLD',
+  COMPUTER_PREFLOP_REACTION: 'COMPUTER_PREFLOP_REACTION',
 };
 
 export const newGame = (difficultySelected, userId) => ({
@@ -39,25 +39,45 @@ export const playerFold = (handId, pot, computerChips) => ({
   }
 });
 
-export const playerRaisePreflop = (betInfo, gameInfo) => ({
-  type: TABLE_ACTIONS.PLAYER_RAISE_PREFLOP,
-  payload: {
-    betInfo,
-    gameInfo,
-  }
-});
 
 export const newDeck = () => ({
   type: TABLE_ACTIONS.NEW_DECK,
 });
+
 export const flop = () => ({
   type: TABLE_ACTIONS.FLOP,
 });
 
 export const turn = () => ({
   type: TABLE_ACTIONS.TURN,
-})
+});
 
 export const river = () => ({
   type: TABLE_ACTIONS.RIVER,
-})
+});
+
+export const computerPreflopReaction = (betInfo, gameInfo, playerAction) => ({
+  type: TABLE_ACTIONS.COMPUTER_PREFLOP_REACTION,
+  payload: {
+    betInfo,
+    gameInfo,
+    playerAction,
+  }
+});
+
+// export const computerPreflopAction = (gameInfo) => ({
+//   type: TABLE_ACTIONS.COMPUTER_PREFLOP_ACTION,
+//   payload: {
+//     gameInfo,
+//   }
+// });
+
+
+
+
+
+
+
+
+
+///////

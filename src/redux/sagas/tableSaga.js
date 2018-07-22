@@ -5,7 +5,7 @@ import { firstHandRequest } from '../requests/tableRequests';
 import { getHandInfoRequest } from '../requests/tableRequests';
 import { playerFoldRequest } from '../requests/tableRequests';
 import { postNewHandRequest } from '../requests/tableRequests';
-import { playerRaisePreflopRequest } from '../requests/tableRequests';
+import { playerBetRequest } from '../requests/tableRequests';
 import { computerPreflopRequest } from '../requests/tableRequests';
 import { computerCallPreflopRequest } from '../requests/tableRequests';
 import { getFlopAndHandRequest } from '../requests/tableRequests';
@@ -15,12 +15,12 @@ let handId = 0;
 let gameId = 0;
 let betInfo = 0;
 let computerAction = '';
+let playerAction = '';
 
 function* newGame(action) {
   try {
     gameId = yield newGameRequest(action.payload);
     handId = yield firstHandRequest(gameId.id);
-    console.log('Look Here', handId);
     gameInfo = yield getHandInfoRequest(handId.id);
     yield put({
       type: TABLE_ACTIONS.SET_GAME,
@@ -48,23 +48,31 @@ function* playerFold(action) {
   }
 }
 
-function* playerRaisePreflop(action) {
+function* computerPreflopReaction(action) {
   try {
     betInfo = action.payload.betInfo;
     gameInfo = action.payload.gameInfo;
     handId = action.payload.gameInfo.id;
-    yield playerRaisePreflopRequest(betInfo, gameInfo);
-    gameInfo = yield getHandInfoRequest(handId);
-    console.log(gameInfo);
-    yield put({
-      type: TABLE_ACTIONS.SET_GAME,
-      payload: gameInfo,
-    })
-    computerAction = yield computerPreflopRequest(betInfo, handId, 'RAISE');
+    playerAction = action.payload.playerAction;
+    if (playerAction === 'RAISE') {
+      yield playerBetRequest(betInfo, gameInfo);
+      gameInfo = yield getHandInfoRequest(handId);
+      yield put({
+        type: TABLE_ACTIONS.SET_GAME,
+        payload: gameInfo,
+      })
+    }
+    computerAction = yield computerPreflopRequest(betInfo, handId, playerAction);
     if (computerAction[0] === 'CALL') {
       yield computerCallPreflopRequest(computerAction);
+      gameInfo = yield getFlopAndHandRequest(action.payload.gameInfo.id);
     }
-    gameInfo = yield getFlopAndHandRequest(action.payload.gameInfo.id);
+    else if (computerAction[0] === 'FOLD') {
+      console.log('COMPUTER FOLD GOES HERE');
+    }
+    else if (computerAction[0] === 'RAISE') {
+      console.log('COMPUTER RAISE GOES HERE');
+    }
     yield put({
       type: TABLE_ACTIONS.SET_GAME,
       payload: gameInfo,
@@ -75,10 +83,20 @@ function* playerRaisePreflop(action) {
   }
 }
 
+// function* computerPreflopAction(action) {
+//   try {
+//     console.log(action.payload);
+//   }
+//   catch(error) {
+//     console.log('GAME CRASHED -WHOOPS', error);
+//   }
+// }
+
 function* tableSaga() {
   yield takeLatest(TABLE_ACTIONS.NEW_GAME, newGame);
   yield takeLatest(TABLE_ACTIONS.PLAYER_FOLD, playerFold);
-  yield takeLatest(TABLE_ACTIONS.PLAYER_RAISE_PREFLOP, playerRaisePreflop);
+  yield takeLatest(TABLE_ACTIONS.COMPUTER_PREFLOP_REACTION, computerPreflopReaction);
+  // yield takeLatest(TABLE_ACTIONS.COMPUTER_PREFLOP_ACTION, computerPreflopAction);
   // yield takeLatest(LOGIN_ACTIONS.LOGOUT, logoutUser);
 }
 

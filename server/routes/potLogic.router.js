@@ -21,7 +21,7 @@ router.put('/playerFold', (req, res) => {
 
 });
 
-router.put('/playerRaisePreflop', (req, res) => {
+router.put('/playerBet', (req, res) => {
   console.log('Grizzly bear', req.body);
   let handId = req.body.gameInfo.id;
   let playerBet = req.body.betInfo;

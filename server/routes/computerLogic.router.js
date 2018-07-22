@@ -6,7 +6,7 @@ const preflopComputerLogic = require('../modules/preflopComputerLogic.js');
 router.post('/computerPreflop', (req, res) => {
   console.log('eagleTime', req.body);
   let playerBet = req.body.playerBetInfo;
-  let playerAction = req.body.action;
+  let playerAction = req.body.playerAction;
   const queryText = `SELECT * FROM hand WHERE id=$1`;
   pool.query(queryText, [req.body.handId])
     .then((result) => {
@@ -16,6 +16,9 @@ router.post('/computerPreflop', (req, res) => {
       if (computerAction === 'CALL') {
         res.send([computerAction, playerBet, result.rows[0].pot, result.rows[0].computer_chips, result.rows[0].id, result.rows[0].deck, result.rows[0].flop_card_1, result.rows[0].flop_card_2, result.rows[0].flop_card_3]);
       }
+      // if (computerAction === 'FOLD') {
+      //
+      // }
     })
     .catch((error) => {
       res.sendStatus(500);
