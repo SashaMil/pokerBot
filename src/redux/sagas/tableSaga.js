@@ -102,9 +102,11 @@ function* computerDecision(action) {
       yield computerCallRequest(gameInfo);
       gameInfo = yield getHandInfoRequest(handId);
     }
-    else if (decision.actionType === 'RAISE') {
+    else if (decision.actionType === 'BET') {
       console.log('COMPUTER RAISING');
-      console.log(decision)
+      console.log(decision);
+      yield computerBetRequest(decision.betAmount, gameInfo);
+      gameInfo = yield getHandInfoRequest(handId);
     }
     yield put({
       type: TABLE_ACTIONS.SET_GAME,

@@ -16,7 +16,10 @@ function computerLogic (playerBet, computerBet, pot, computerChips, playerChips,
     return 'CALL';
   }
   if (handPoints >= 0) {
-    return {actionType: 'BET', betAmount: playerBet * 2.5}
+    if (playerBet === 0) {
+      return {actionType: 'BET', betAmount: 30}
+    }
+    return {actionType: 'BET', betAmount: playerBet * 3}
   }
 
 }

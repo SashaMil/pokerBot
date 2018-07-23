@@ -14,7 +14,7 @@ router.get('/:id', (req, res) => {
         res.send(computerAction);
       }
       else {
-        res.send({computerAction});
+        res.send(computerAction);
       }
     })
     .catch((error) => {

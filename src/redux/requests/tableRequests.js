@@ -90,9 +90,9 @@ export function computerFoldRequest(foldInfo) {
     .catch((error) => { throw error.response || error });
 }
 
-export function computerBetRequest(betInfo, gameInfo) {
+export function computerBetRequest(betAmount, gameInfo) {
   return axios.put('/potLogic/computerBet', {
-    betInfo: betInfo,
+    betAmount: betAmount,
     gameInfo: gameInfo,
   })
     .then(response => response.data)

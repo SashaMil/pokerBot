@@ -86,7 +86,6 @@ router.put('/playerCall', (req, res) => {
 
 router.put('/playerBet', (req, res) => {
 
-  console.log('vulture', req.body);
   let handId = req.body.gameInfo.id;
   let newPlayerBet = req.body.betAmount + req.body.gameInfo.player_bet;
   let newPot = req.body.betAmount + req.body.gameInfo.pot;
@@ -107,15 +106,16 @@ router.put('/playerBet', (req, res) => {
 });
 
 router.put('/computerBet', (req, res) => {
+
   console.log('Jay-Z', req.body);
   let handId = req.body.gameInfo.id;
-  let computerBet = req.body.betInfo;
-  let newPot = computerBet + req.body.gameInfo.pot;
-  let newComputerChips = req.body.gameInfo.computer_chips - computerBet;
+  let newComputerBet = req.body.betAmount + req.body.gameInfo.computer_bet;
+  let newPot = req.body.betAmount + req.body.gameInfo.pot;
+  let newComputerChips = req.body.gameInfo.computer_chips - req.body.betAmount;
   let playerAction = !req.body.gameInfo.player_action;
 
-  const queryText = 'UPDATE hand SET pot=$2, computer_chips=$3, player_action=$4 WHERE id=$1';
-  pool.query(queryText, [handId, newPot, newComputerChips, playerAction])
+  const queryText = 'UPDATE hand SET pot=$2, computer_chips=$3, player_action=$4, computer_bet=$5 WHERE id=$1';
+  pool.query(queryText, [handId, newPot, newComputerChips, playerAction, newComputerBet])
     .then((result) => {
       console.log('Finished making computer bet');
       res.sendStatus(200);
