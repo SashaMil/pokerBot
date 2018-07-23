@@ -75,6 +75,7 @@ function* playerCall(action) {
         type: TABLE_ACTIONS.SET_GAME,
         payload: gameInfo,
       })
+      gameInfo.player_action_counter = 0;
     }
     else {
       gameInfo = yield getHandInfoRequest(handId);
@@ -108,7 +109,7 @@ function* playerBet(action) {
 function* computerDecision(action) {
 
   try {
-    
+
     handId = action.payload.gameInfo.id;
     gameInfo = action.payload.gameInfo;
     decision = yield computerActionRequest(handId);

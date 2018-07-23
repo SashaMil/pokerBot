@@ -66,10 +66,10 @@ class PlayerController extends Component {
           </div>
           ) : (
             <div>
-              <Button onClick={this.fold} disabled={!this.props.table.table.state.player_action} variant="contained" color="secondary" className={styles.button}>
+              <Button onClick={this.fold} disabled={this.props.table.table.state.player_action} variant="contained" color="secondary" className={styles.button}>
                 Fold
               </Button>
-              <Button disabled={!this.props.table.table.state.player_action} variant="contained" color="default" className={styles.button}>
+              <Button onClick={this.call} disabled={this.props.table.table.state.player_action} variant="contained" color="default" className={styles.button}>
                 Check
               </Button>
             </div>
