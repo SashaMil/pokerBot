@@ -1,4 +1,38 @@
-function computerLogic (playerBet, computerBet, pot, computerChips, playerChips, computerCard1, computerCard2) {
+function computerLogic (playerBet, computerBet, pot, computerChips, playerChips, computerCard1, computerCard2, street) {
+
+  if (street) {
+    console.log('dolphin baby', street.flop);
+    let street = street.flop;
+    computerCard1 = parseInt(computerCard1.slice(0, -1));
+    computerCard2 = parseInt(computerCard2.slice(0 ,-1));
+    street = street.map(x => parseInt(x.slice(0, -1)));
+    console.log(flop);
+    let computerHand = [computerCard1, computerCard2];
+
+    console.log(computerHand, flop, findPairs(computerHand, flop));
+    if (findPairs.length === 1) {
+      return 'CALL';
+    }
+    if (findPairs.length === 0 && playerBet > computerBet) {
+      return 'FOLD';
+    }
+    if (findPairs.length === 2) {
+      return {actionType: 'BET', betAmount: playerBet * 3};
+    }
+
+  }
+
+  function findPairs(hand, street) {
+    let pairs = [];
+    for (let card of hand) {
+      for (let thing of street) {
+        if (hand[card] === street[thing]) {
+          pairs.push(hand[card]);
+        }
+      }
+    }
+    console.log('dolphin time', pairs);
+  }
 
   let possibleAces = formatPossibleAces(computerCard1, computerCard2);
   computerCard1 = possibleAces[0];

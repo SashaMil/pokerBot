@@ -20,6 +20,7 @@ const PlayerHand = ({ table }) => {
       <Slide direction="right" in={table.table.state.player_card_1} mountOnEnter unmountOnExit>
         <img width='120px' src={'images/Cards/purple_back.png'} />
       </Slide>
+      <p style={{color: 'white'}}>{table.table.state.computer_action_type}</p>
     </div>
   )
 }

@@ -18,6 +18,15 @@ export function firstHandRequest(newGameId) {
     .catch((error) => { throw error.response || error; });
 }
 
+export function postActionTypeRequest(actionType, id) {
+  return axios.put('/potLogic/computerAction', {
+    actionType,
+    id,
+  })
+    .then(response => response.data)
+    .catch((error) => { throw error.response || error; });
+}
+
 export function getHandInfoRequest(newHandId) {
   return axios.get(`/table/getHandInfo/${newHandId}`, {
   })
@@ -27,6 +36,13 @@ export function getHandInfoRequest(newHandId) {
 
 export function getFlopAndHandInfoRequest(newHandId) {
   return axios.get(`/table/getFlopAndHandInfo/${newHandId}`, {
+  })
+    .then(response => response.data)
+    .catch((error) => { throw error.response || error; });
+}
+
+export function getTurnAndHandInfoRequest(newHandId) {
+  return axios.get(`/table/getTurnAndHandInfo/${newHandId}`, {
   })
     .then(response => response.data)
     .catch((error) => { throw error.response || error; });
@@ -70,6 +86,16 @@ export function computerActionRequest(handId) {
   })
     .then(response => response.data)
     .catch((error) => { throw error.response || error; });
+}
+
+export function computerActionStreetRequest(gameInfo, street) {
+  return axios.post('/computerAction/', {
+    gameInfo,
+    street,
+  })
+    .then(response => response.data)
+    .catch((error) => { throw error.response || error; });
+
 }
 
 export function computerCallRequest(gameInfo) {

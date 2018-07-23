@@ -152,12 +152,12 @@ const styles2 = theme => ({
 
 const images = [
   {
-    url: 'images/if_Gear_599838.png',
+    url: 'images/if_Pie_Chart_500702.png',
     title: 'Stats',
     width: '33.3%',
   },
   {
-    url: 'images/if_Settings_2_500624.png',
+    url: 'images/if_Web_504521.png',
     title: 'Leaderboard',
     width: '33.3%',
   },
@@ -170,17 +170,17 @@ const images = [
 
 const images2 = [
   {
-    url: 'images/if_Gear_599838.png',
+    url: 'images/if_Settings_2_500624.png',
     title: 'Preferences',
     width: '33.3%',
   },
   {
-    url: 'images/if_Settings_2_500624.png',
+    url: 'images/if_Avatar_500621.png',
     title: 'Account Settings',
     width: '33.3%',
   },
   {
-    url: 'images/if_Settings_2_500624.png',
+    url: 'images/if_Export_500620.png',
     title: 'Logout',
     width: '33.3%',
   },

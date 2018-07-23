@@ -7,6 +7,7 @@ export const TABLE_ACTIONS = {
   PLAYER_BET: 'PLAYER_BET',
   PLAYER_CALL: 'PLAYER_CALL',
   COMPUTER_DECISION: 'COMPUTER_DECISION',
+  COMPUTER_DECISION_STREET: 'COMPUTER_DECISION_STREET',
   SET_FLOP: 'SET_FLOP',
   TURN: 'TURN',
   RIVER: 'RIVER',
@@ -19,6 +20,14 @@ export const newGame = (difficultySelected, userId) => ({
     userId,
   }
 });
+
+export const computerDecisionStreet= (gameInfo, street) => ({
+  type: TABLE_ACTIONS.COMPUTER_DECISION_STREET,
+  payload: {
+    gameInfo,
+    street,
+  }
+})
 
 export const setGame = () => ({
   type: TABLE_ACTIONS.SET_GAME,

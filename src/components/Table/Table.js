@@ -13,6 +13,7 @@ import Pot from '../Pot/Pot';
 import { newGame } from '../../redux/actions/tableActions';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 import { computerDecision } from '../../redux/actions/tableActions';
+import { computerDecisionStreet } from '../../redux/actions/tableActions';
 import Button from '@material-ui/core/Button';
 
 
@@ -45,11 +46,19 @@ class Table extends Component {
         this.props.dispatch(computerDecision(this.props.table.table.state));
       }
     }
-    if (this.props.table.table.state === 0 && prevProps.table.table.state) {
-      if (this.props.table.table.state.player_action_counter === 0 && prevProps.table.table.state.player_action_counter > 0) {
-        this.props.dispatch(computerDecision(this.props.table.table.state));
+    if (this.props.table.street.flop !== prevProps.table.street.flop) {
+      if (this.props.table.table.state.player_action_counter < 2 && this.props.table.table.state.player_sb) {
+        this.props.dispatch(computerDecisionStreet(this.props.table.table.state, this.props.table.street));
+      }
+      if (this.props.table.table.state.player_action_counter < 1 && !this.props.table.table.state.player_sb) {
+        this.props.dispatch(computerDecisionStreet(this.props.table.table.state, this.props.table.street));
       }
     }
+    // if (this.props.table.table.state === 0 && prevProps.table.table.state) {
+    //   if (this.props.table.table.state.player_action_counter === 0 && prevProps.table.table.state.player_action_counter > 0) {
+    //     this.props.dispatch(computerDecision(this.props.table.table.state));
+    //   }
+    // }
   }
 
   render() {

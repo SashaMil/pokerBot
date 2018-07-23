@@ -27,12 +27,6 @@ class Street extends Component {
 
   }
 
-  // componentDidUpdate = (prevProps) => {
-  //   if (this.props.table.table.state.flop_card_1 !== prevProps.table.table.state.flop_card_1 && !this.props.table.table.state.player_action) {
-  //
-  //   }
-  // }
-
   render() {
 
     return(

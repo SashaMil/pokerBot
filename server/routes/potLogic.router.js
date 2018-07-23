@@ -111,7 +111,6 @@ router.put('/playerBet', (req, res) => {
 
 router.put('/computerBet', (req, res) => {
 
-  console.log('Jay-Z', req.body);
   let handId = req.body.gameInfo.id;
   let newComputerBet = req.body.betAmount + req.body.gameInfo.computer_bet;
   let newPot = req.body.betAmount + req.body.gameInfo.pot;
@@ -128,6 +127,22 @@ router.put('/computerBet', (req, res) => {
       console.log('Error making computer bet');
       res.sendStatus(500);
     })
+})
+
+router.put('/computerAction', (req, res) => {
+  console.log('joker', req.body)
+
+  const queryText = `UPDATE  hand SET computer_action_type=$2 WHERE id=$1;`;
+  pool.query(queryText, [req.body.id, req.body.actionType])
+    .then((result) => {
+      console.log('Finished making computer bet');
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log('Error making computer bet');
+      res.sendStatus(500);
+    })
+
 })
 
 

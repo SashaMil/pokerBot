@@ -12,6 +12,9 @@ import { getFlopAndHandInfoRequest } from '../requests/tableRequests';
 import { computerFoldRequest } from '../requests/tableRequests';
 import { computerBetRequest } from '../requests/tableRequests';
 import { computerActionRequest } from '../requests/tableRequests';
+import { getTurnAndHandInfoRequest } from '../requests/tableRequests';
+import { computerActionStreetRequest } from '../requests/tableRequests';
+import { postActionTypeRequest } from '../requests/tableRequests';
 
 let gameInfo = '';
 let handId = 0;
@@ -64,6 +67,8 @@ function* playerCall(action) {
     handId = action.payload.gameInfo.id;
     yield playerCallRequest(action.payload.gameInfo);
     gameInfo = yield getHandInfoRequest(handId);
+    console.log(gameInfo);
+    // if !gameInfo.player_sb && gameInfo.player_action_counter > 0) || (gameInfo.player_sb && gameInfo.player_action_counter > 1))
     if ((!gameInfo.player_sb && gameInfo.player_action_counter > 0) || (gameInfo.player_sb && gameInfo.player_action_counter > 1)) {
       gameInfo = yield getFlopAndHandInfoRequest(handId);
       yield put({
@@ -114,6 +119,59 @@ function* computerDecision(action) {
     gameInfo = action.payload.gameInfo;
     decision = yield computerActionRequest(handId);
     if (decision === 'FOLD') {
+      yield postActionTypeRequest(decision, handId);
+      console.log('COMPUTER FOLDING');
+      yield computerFoldRequest(gameInfo);
+      gameInfo = yield getHandInfoRequest(handId);
+      handId = yield postNewHandRequest(gameInfo);
+      gameInfo = yield getHandInfoRequest(handId.id);
+      yield put({
+        type: TABLE_ACTIONS.SET_FLOP,
+        payload: [],
+      })
+    }
+    else if (decision === 'CALL') {
+      console.log('COMPUTER CALLING');
+      yield postActionTypeRequest(decision, handId);
+      yield computerCallRequest(gameInfo);
+      gameInfo = yield getHandInfoRequest(handId);
+      if (gameInfo.player_action_counter > 0) {
+        gameInfo = yield getFlopAndHandInfoRequest(handId);
+        yield put({
+          type: TABLE_ACTIONS.SET_FLOP,
+          payload: [gameInfo.flop_card_1, gameInfo.flop_card_2, gameInfo.flop_card_3],
+        })
+      }
+      else {
+        gameInfo = yield getHandInfoRequest(handId);
+      }
+    }
+    else if (decision.actionType === 'BET') {
+      console.log('COMPUTER RAISING');
+      yield postActionTypeRequest(decision.actionType, handId);
+      console.log(decision);
+      yield computerBetRequest(decision.betAmount, gameInfo);
+      gameInfo = yield getHandInfoRequest(handId);
+    }
+    yield put({
+      type: TABLE_ACTIONS.SET_GAME,
+      payload: gameInfo,
+    });
+  }
+  catch (error) {
+    console.log('WHOOPS');
+  }
+}
+
+function* computerDecisionStreet(action) {
+
+  try {
+
+    handId = action.payload.gameInfo.id;
+    gameInfo = action.payload.gameInfo;
+    decision = yield computerActionStreetRequest(gameInfo, action.payload.street);
+    console.log('yoda', decision);
+    if (decision === 'FOLD') {
       console.log('COMPUTER FOLDING');
       yield computerFoldRequest(gameInfo);
       gameInfo = yield getHandInfoRequest(handId);
@@ -153,6 +211,7 @@ function* computerDecision(action) {
   catch (error) {
     console.log('WHOOPS');
   }
+
 }
 
 function* tableSaga() {
@@ -161,6 +220,7 @@ function* tableSaga() {
   yield takeLatest(TABLE_ACTIONS.PLAYER_BET, playerBet);
   yield takeLatest(TABLE_ACTIONS.PLAYER_CALL, playerCall);
   yield takeLatest(TABLE_ACTIONS.COMPUTER_DECISION, computerDecision);
+  yield takeLatest(TABLE_ACTIONS.COMPUTER_DECISION_STREET, computerDecisionStreet)
 }
 
 export default tableSaga;

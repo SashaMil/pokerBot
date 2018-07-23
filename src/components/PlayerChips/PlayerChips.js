@@ -9,11 +9,14 @@ const mapStateToProps = state => ({
   table: state.table,
 });
 
+let color = 'white';
+
 const PlayerChips = ({ table }) => {
 
   return (
     <div>
-      <textarea value={table.table.state.player_chips}/>
+      <p style={{color: 'white'}}>Your Bet: {table.table.state.player_bet}</p>
+      <p style={{color: 'white'}}>Remaining Chips: {table.table.state.player_chips}</p>
     </div>
   )
 }

@@ -69,7 +69,7 @@ router.post('/firstHand', (req, res) => {
   router.get('/getHandInfo/:id', (req, res) => {
     console.log('elephant', req.params.id);
     let handId = req.params.id;
-    const queryText = `SELECT player_chips, computer_chips, pot, game_id, player_card_1, player_card_2, player_sb, player_action, player_bet, computer_bet, player_action_counter, id FROM hand WHERE id=$1`
+    const queryText = `SELECT player_chips, computer_chips, pot, game_id, player_card_1, player_card_2, player_sb, player_action, player_bet, computer_bet, player_action_counter, computer_action_type, id FROM hand WHERE id=$1`
     pool.query(queryText, [handId])
       .then((result) => {
         console.log('Successfully got hand details', result.rows);
@@ -85,7 +85,22 @@ router.post('/firstHand', (req, res) => {
   router.get('/getFlopAndHandInfo/:id', (req, res) => {
     console.log('moneytime', req.params.id);
     let id = req.params.id;
-    const queryText = `SELECT player_chips, computer_chips, pot, game_id, player_card_1, player_card_2, player_sb, flop_card_1, flop_card_2, flop_card_3, player_action, player_bet, computer_bet, player_action_counter, id FROM  hand WHERE id=$1`
+    const queryText = `SELECT player_chips, computer_chips, pot, game_id, player_card_1, player_card_2, player_sb, flop_card_1, flop_card_2, flop_card_3, player_action, player_bet, computer_bet, player_action_counter, computer_action_type, id FROM  hand WHERE id=$1`
+    pool.query(queryText, [id])
+      .then((result) => {
+        console.log('Successfully got hand details', result.rows);
+        res.send(result.rows[0]);
+      })
+      .catch((error) => {
+        console.log('Error sending flop and hand details', error);
+        res.sendStatus(500);
+      })
+  });
+
+  router.get('/getTurnAndHandInfo/:id', (req, res) => {
+    console.log('moneytime', req.params.id);
+    let id = req.params.id;
+    const queryText = `SELECT player_chips, computer_chips, pot, game_id, player_card_1, player_card_2, player_sb, turn, player_action, player_bet, computer_bet, player_action_counter, id FROM  hand WHERE id=$1`
     pool.query(queryText, [id])
       .then((result) => {
         console.log('Successfully got hand details', result.rows);

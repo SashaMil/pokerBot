@@ -17,7 +17,7 @@ const mapStateToProps = state => ({
 const Flop = ({ table }) => {
 
     return (
-      <div>
+      <div style={{textAlign: 'right'}}>
         <Slide direction="right" in={table.street.flop[0]} mountOnEnter unmountOnExit>
           <img width='120px' src={`images/Cards/${table.street.flop[0]}.png`} />
         </Slide>

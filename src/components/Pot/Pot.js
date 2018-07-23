@@ -15,7 +15,7 @@ const Pot = ({ table }) => {
 
   return (
     <div>
-      <input value={table.table.state.pot}></input>
+      <p style={{color: 'white', right: '300px', top: '600px', position: 'absolute'}}>Pot: {table.table.state.pot}</p>
     </div>
   )
 
