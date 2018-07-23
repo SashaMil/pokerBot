@@ -12,7 +12,7 @@ import Street from '../Street/Street'
 import Pot from '../Pot/Pot';
 import { newGame } from '../../redux/actions/tableActions';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
-import { computerPreflopAction } from '../../redux/actions/tableActions';
+import { computerDecision } from '../../redux/actions/tableActions';
 import Button from '@material-ui/core/Button';
 
 
@@ -39,9 +39,8 @@ class Table extends Component {
   }
 
   componentDidUpdate = (prevProps) => {
-    if (this.props.table.state !== prevProps.table.state && !this.props.table.state.player_action && !this.props.table.state.player_sb) {
-      console.log('TESTING', this.props.table.state)
-      this.props.dispatch(computerPreflopAction(this.props.table.state));
+    if (this.props.table.state !== prevProps.table.state && !this.props.table.state.player_action) {
+      this.props.dispatch(computerDecision(this.props.table.state));
     }
   }
 

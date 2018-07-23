@@ -3,10 +3,10 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 router.put('/playerFold', (req, res) => {
-
-  let handId = req.body.handId;
+  console.log(req.body);
+  let handId = req.body.gameInfo.id;
   let newPot = 0;
-  let newComputerChips = req.body.computerChips + req.body.pot;
+  let newComputerChips = req.body.gameInfo.computer_chips + req.body.gameInfo.pot;
   let playerAction = !req.body.player_action
 
   const queryText = `UPDATE hand SET pot=$2, computer_chips=$3, player_action=$4 WHERE id=$1;`;
@@ -43,14 +43,16 @@ router.put('/computerFold', (req, res) => {
 });
 
 router.put('/computerCall', (req, res) => {
-
-  let computerCallAmount = req.body.betInfo;
+  console.log('walrus', req.body);
   let handId = req.body.gameInfo.id;
-  let newComputerChips = req.body.gameInfo.computer_chips - computerCallAmount;
-  let newPot = req.body.gameInfo.pot + computerCallAmount;
+  let callAmount = req.body.gameInfo.player_bet - req.body.gameInfo.computer_bet;
+  let newComputerBet = req.body.gameInfo.player_bet;
+  let computerCallAmount = req.body.betInfo;
+  let newPot = req.body.gameInfo.pot + callAmount;
+  let newComputerChips = req.body.gameInfo.computer_chips - callAmount;
   let playerAction = !req.body.gameInfo.player_action;
-  const queryText = `UPDATE hand SET pot=$2, computer_chips=$3, player_action=$4 WHERE id=$1`;
-  pool.query(queryText, [handId, newPot, newComputerChips, playerAction])
+  const queryText = `UPDATE hand SET pot=$2, computer_chips=$3, player_action=$4, computer_bet=$5 WHERE id=$1`;
+  pool.query(queryText, [handId, newPot, newComputerChips, playerAction, newComputerBet])
     .then((result) => {
       console.log('Finished changing db for computer call');
       res.sendStatus(200);
@@ -62,17 +64,37 @@ router.put('/computerCall', (req, res) => {
 
 });
 
-router.put('/playerBet', (req, res) => {
-
+router.put('/playerCall', (req, res) => {
   let handId = req.body.gameInfo.id;
-  let playerBet = req.body.betInfo;
-  let newPot = playerBet + req.body.gameInfo.pot;
-  console.log('gorillas', req.body);
-  let newPlayerChips = req.body.gameInfo.player_chips - playerBet;
+  let callAmount = req.body.gameInfo.computer_bet - req.body.gameInfo.player_bet;
+  let newPlayerBet = req.body.gameInfo.computer_bet;
+  let newPot = req.body.gameInfo.pot + callAmount;
+  let newPlayerChips = req.body.gameInfo.player_chips - callAmount;
   let playerAction = !req.body.gameInfo.player_action;
 
-  const queryText = 'UPDATE hand SET pot=$2, player_chips=$3, player_action=$4 WHERE id=$1';
-  pool.query(queryText, [handId, newPot, newPlayerChips, playerAction])
+  const queryText = 'UPDATE hand SET pot=$2, player_chips=$3, player_action=$4, player_bet=$5 WHERE id=$1';
+  pool.query(queryText, [handId, newPot, newPlayerChips, playerAction, newPlayerBet])
+    .then((result) => {
+      console.log('Finished making player bet');
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log('Error making player bet');
+      res.sendStatus(500);
+    })
+})
+
+router.put('/playerBet', (req, res) => {
+
+  console.log('vulture', req.body);
+  let handId = req.body.gameInfo.id;
+  let newPlayerBet = req.body.betAmount + req.body.gameInfo.player_bet;
+  let newPot = req.body.betAmount + req.body.gameInfo.pot;
+  let newPlayerChips = req.body.gameInfo.player_chips - req.body.betAmount;
+  let playerAction = !req.body.gameInfo.player_action;
+
+  const queryText = 'UPDATE hand SET pot=$2, player_chips=$3, player_action=$4, player_bet=$5 WHERE id=$1';
+  pool.query(queryText, [handId, newPot, newPlayerChips, playerAction, newPlayerBet])
     .then((result) => {
       console.log('Finished making player bet');
       res.sendStatus(200);

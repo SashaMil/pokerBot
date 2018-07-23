@@ -12,7 +12,7 @@ const passport = require('./strategies/user.strategy');
 const userRouter = require('./routes/user.router');
 const tableRouter = require('./routes/table.router');
 const potLogicRouter = require('./routes/potLogic.router');
-const computerLogicRouter = require('./routes/computerLogic.router');
+const computerActionRouter = require('./routes/computerAction.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -29,7 +29,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/table', tableRouter);
 app.use('/potLogic', potLogicRouter);
-app.use('/computerLogic', computerLogicRouter);
+app.use('/computerAction', computerActionRouter);
 
 // Serve static files
 app.use(express.static('build'));

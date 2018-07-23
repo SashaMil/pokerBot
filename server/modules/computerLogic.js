@@ -1,27 +1,27 @@
-function computerPreflopReactionLogic (actionType, playerBet, pot, computerChips, playerChips, computerCard1, computerCard2) {
+function computerLogic (playerBet, computerBet, pot, computerChips, playerChips, computerCard1, computerCard2) {
 
   let possibleAces = formatPossibleAces(computerCard1, computerCard2);
   computerCard1 = possibleAces[0];
   computerCard2 = possibleAces[1];
-  console.log(computerCard1, computerCard2);
-  let handPoints = (evaluateHandPreflop(computerCard1, computerCard2));
+  console.log(playerBet, computerBet, pot, computerChips, playerChips, computerCard1, computerCard2);
+  let handPoints = (evaluateStartingHand(computerCard1, computerCard2));
 
-  if (handPoints === 8 && actionType === 'RAISE') {
+  if (handPoints >= 200) {
     return 'FOLD';
   }
-  if (handPoints === 9  && actionType === 'RAISE') {
+  if (handPoints >= 600) {
     return 'CALL';
   }
-  if (handPoints === 6 && actionType === 'RAISE') {
+  if (handPoints === 6) {
     return 'CALL';
   }
-  if (handPoints >= 0 && actionType === 'RAISE') {
-    return ['RAISE', playerBet, (playerBet * 3) - playerBet];
+  if (handPoints >= 0) {
+    return {actionType: 'BET', betAmount: playerBet * 2.5}
   }
 
 }
 
-function evaluateHandPreflop(str1, str2) {
+function evaluateStartingHand(str1, str2) {
   let handValue = 0;
   // Sum of values of 20
   if (parseInt(str1.slice(0, -1)) + parseInt(str2.slice(0,-1)) > 20) {
@@ -67,4 +67,4 @@ function formatPossibleAces(str1, str2) {
 
 
 
-module.exports = computerPreflopReactionLogic;
+module.exports = computerLogic;

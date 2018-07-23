@@ -32,12 +32,9 @@ export function getFlopAndHandInfoRequest(newHandId) {
     .catch((error) => { throw error.response || error; });
 }
 
-export function playerFoldRequest(foldInfo) {
+export function playerFoldRequest(gameInfo) {
   return axios.put('/potLogic/playerFold', {
-    handId: foldInfo.handId,
-    pot: foldInfo.pot,
-    computerChips: foldInfo.computerChips,
-
+    gameInfo: gameInfo,
   })
     .then(response => response.data)
     .catch((error) => {throw error.response || error; });
@@ -51,35 +48,32 @@ export function postNewHandRequest(gameInfo) {
     .catch((error) => { throw error.response || error});
 }
 
-export function playerBetRequest(betInfo, gameInfo) {
+export function playerBetRequest(betAmount, gameInfo) {
   return axios.put('/potLogic/playerBet', {
-    betInfo: betInfo,
+    betAmount: betAmount,
     gameInfo: gameInfo,
   })
     .then(response => response.data)
     .catch((error) => { throw error.response || error});
 }
 
-export function computerPreflopReactionRequest(playerBetInfo, handId, playerAction) {
-  return axios.post('/computerLogic/computerPreflopReaction', {
-    playerBetInfo: playerBetInfo,
-    handId: handId,
-    playerAction: playerAction,
+export function playerCallRequest(gameInfo) {
+  return axios.put('/potLogic/playerCall', {
+    gameInfo
   })
     .then(response => response.data)
     .catch((error) => { throw error.response || error});
 }
 
-export function computerPreflopActionRequest(handId) {
-  return axios.get(`/computerLogic/computerPreflopAction/${handId}`, {
+export function computerActionRequest(handId) {
+  return axios.get(`/computerAction/${handId}`, {
   })
     .then(response => response.data)
-    .catch((error) => { throw error.response || error});
+    .catch((error) => { throw error.response || error; });
 }
 
-export function computerCallRequest(betInfo, gameInfo) {
+export function computerCallRequest(gameInfo) {
   return axios.put('/potLogic/computerCall', {
-    betInfo: betInfo,
     gameInfo: gameInfo,
   })
     .then(response => response.data)

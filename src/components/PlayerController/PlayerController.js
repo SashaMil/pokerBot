@@ -8,7 +8,7 @@ import { newHand } from '../../redux/actions/tableActions';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import purple from '@material-ui/core/colors/purple';
-import { computerPreflopAction } from '../../redux/actions/tableActions';
+import { playerCall } from '../../redux/actions/tableActions';
 
 
 
@@ -39,14 +39,12 @@ class PlayerController extends Component {
   }
 
   fold = () => {
-    this.props.dispatch(playerFold(this.props.table.state.id, this.props.table.state.pot, this.props.table.state.computer_chips));
+    this.props.dispatch(playerFold(this.props.table.state));
   }
 
-  // componentDidMount = () => {
-  //   if (!this.props.table.state.player_action) {
-  //     this.props.dispatch(computerPreflopAction(this.props.table.state));
-  //   }
-  // }
+  call = () => {
+    this.props.dispatch(playerCall(this.props.table.state));
+  }
 
   render() {
     return(
@@ -56,7 +54,7 @@ class PlayerController extends Component {
               <Button onClick={this.fold} variant="contained" color="secondary" className={styles.button}>
                 Fold
               </Button>
-              <Button variant="contained" color="default" className={styles.button}>
+              <Button onClick={this.call} variant="contained" color="default" className={styles.button}>
                 Call
               </Button>
             </div>
