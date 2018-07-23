@@ -139,7 +139,6 @@ function* tableSaga() {
   yield takeLatest(TABLE_ACTIONS.PLAYER_FOLD, playerFold);
   yield takeLatest(TABLE_ACTIONS.COMPUTER_PREFLOP_REACTION, computerPreflopReaction);
   yield takeLatest(TABLE_ACTIONS.COMPUTER_PREFLOP_ACTION, computerPreflopAction);
-  // yield takeLatest(LOGIN_ACTIONS.LOGOUT, logoutUser);
 }
 
 export default tableSaga;
