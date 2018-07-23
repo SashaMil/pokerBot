@@ -14,9 +14,9 @@ const Turn = ({ table }) => {
   if (table.cards.playerHand !== undefined) {
     return (
       <div>
-        <img width='200px' src={table.cards.flop[0][2]} />
-        <img width='200px' src={table.cards.playerHand[1][2]} />
-        <img width='200px' src={table.cards.playerHand[2][2]} />
+        <img width='200px' src={table.table.cards.flop[0][2]} />
+        <img width='200px' src={table.table.cards.playerHand[1][2]} />
+        <img width='200px' src={table.table.cards.playerHand[2][2]} />
       </div>
     )
   }

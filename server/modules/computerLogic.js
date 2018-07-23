@@ -24,7 +24,7 @@ function computerLogic (playerBet, computerBet, pot, computerChips, playerChips,
     }
     return {actionType: 'BET', betAmount: playerBet * 3}
   }
-  
+
 }
 
 function evaluateStartingHand(str1, str2) {

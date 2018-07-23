@@ -13,7 +13,7 @@ const PlayerChips = ({ table }) => {
 
   return (
     <div>
-      <textarea value={table.state.player_chips}/>
+      <textarea value={table.table.state.player_chips}/>
     </div>
   )
 }

@@ -51,6 +51,7 @@ router.put('/computerCall', (req, res) => {
   let newPot = req.body.gameInfo.pot + callAmount;
   let newComputerChips = req.body.gameInfo.computer_chips - callAmount;
   let playerAction = !req.body.gameInfo.player_action;
+
   const queryText = `UPDATE hand SET pot=$2, computer_chips=$3, player_action=$4, computer_bet=$5 WHERE id=$1`;
   pool.query(queryText, [handId, newPot, newComputerChips, playerAction, newComputerBet])
     .then((result) => {
@@ -71,9 +72,10 @@ router.put('/playerCall', (req, res) => {
   let newPot = req.body.gameInfo.pot + callAmount;
   let newPlayerChips = req.body.gameInfo.player_chips - callAmount;
   let playerAction = !req.body.gameInfo.player_action;
+  let playerActionCounter = req.body.gameInfo.player_action_counter + 1;
 
-  const queryText = 'UPDATE hand SET pot=$2, player_chips=$3, player_action=$4, player_bet=$5 WHERE id=$1';
-  pool.query(queryText, [handId, newPot, newPlayerChips, playerAction, newPlayerBet])
+  const queryText = 'UPDATE hand SET pot=$2, player_chips=$3, player_action=$4, player_bet=$5, player_action_counter=$6 WHERE id=$1';
+  pool.query(queryText, [handId, newPot, newPlayerChips, playerAction, newPlayerBet, playerActionCounter])
     .then((result) => {
       console.log('Finished making player bet');
       res.sendStatus(200);
@@ -91,9 +93,10 @@ router.put('/playerBet', (req, res) => {
   let newPot = req.body.betAmount + req.body.gameInfo.pot;
   let newPlayerChips = req.body.gameInfo.player_chips - req.body.betAmount;
   let playerAction = !req.body.gameInfo.player_action;
+  let playerActionCounter = req.body.gameInfo.player_action_counter + 1;
 
-  const queryText = 'UPDATE hand SET pot=$2, player_chips=$3, player_action=$4, player_bet=$5 WHERE id=$1';
-  pool.query(queryText, [handId, newPot, newPlayerChips, playerAction, newPlayerBet])
+  const queryText = 'UPDATE hand SET pot=$2, player_chips=$3, player_action=$4, player_bet=$5, player_action_counter=$6 WHERE id=$1';
+  pool.query(queryText, [handId, newPot, newPlayerChips, playerAction, newPlayerBet, playerActionCounter])
     .then((result) => {
       console.log('Finished making player bet');
       res.sendStatus(200);

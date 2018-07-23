@@ -12,5 +12,20 @@ const table = (state = {}, action) => {
   }
 };
 
+const street = (state = {flop: [], turn: [], river: []}, action) => {
+  switch (action.type) {
+    case TABLE_ACTIONS.SET_FLOP:
+      return {
+        ... state,
+        flop: action.payload,
+      }
+    default:
+      return state;
+  }
+};
 
-export default table;
+
+export default combineReducers({
+  table,
+  street,
+});

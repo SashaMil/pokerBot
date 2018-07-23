@@ -7,7 +7,7 @@ export const TABLE_ACTIONS = {
   PLAYER_BET: 'PLAYER_BET',
   PLAYER_CALL: 'PLAYER_CALL',
   COMPUTER_DECISION: 'COMPUTER_DECISION',
-  FLOP: 'FLOP',
+  SET_FLOP: 'SET_FLOP',
   TURN: 'TURN',
   RIVER: 'RIVER',
 };
@@ -64,8 +64,8 @@ export const newDeck = () => ({
   type: TABLE_ACTIONS.NEW_DECK,
 });
 
-export const flop = () => ({
-  type: TABLE_ACTIONS.FLOP,
+export const setFlop = () => ({
+  type: TABLE_ACTIONS.SET_FLOP,
 });
 
 export const turn = () => ({

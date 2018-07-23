@@ -43,12 +43,12 @@ router.post('/firstHand', (req, res) => {
   let arr = [true, false];
   let bool = arr[Math.floor(Math.random() * (2))];
   console.log(bool);
-  const queryText = `INSERT INTO hand (computer_chips, computer_card_1, player_card_1, computer_card_2, player_card_2, player_chips, player_sb, pot, game_id, flop_card_1, flop_card_2, flop_card_3, turn, river, player_action, player_bet, computer_bet)
+  const queryText = `INSERT INTO hand (computer_chips, computer_card_1, player_card_1, computer_card_2, player_card_2, player_chips, player_sb, pot, game_id, flop_card_1, flop_card_2, flop_card_3, turn, river, player_action, player_bet, computer_bet, player_action_counter)
                     Values
-                    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+                    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
                     RETURNING id`;
   if (bool) {
-    pool.query(queryText, [1490, computerCard1, playerCard1, computerCard2, playerCard2, 1495, bool, 15, req.body.newGameId, flopCard1, flopCard2, flopCard3, turn, river, true, 5, 10])
+    pool.query(queryText, [1490, computerCard1, playerCard1, computerCard2, playerCard2, 1495, bool, 15, req.body.newGameId, flopCard1, flopCard2, flopCard3, turn, river, true, 5, 10, 0])
       .then((result) => {
         res.send(result.rows[0]);
       })
@@ -56,7 +56,7 @@ router.post('/firstHand', (req, res) => {
         res.sendStatus(500);
       })
   } else {
-    pool.query(queryText, [1495, computerCard1, playerCard1, computerCard2, playerCard2, 1490, bool, 15, req.body.newGameId, flopCard1, flopCard2, flopCard3, turn, river, false, 10, 5])
+    pool.query(queryText, [1495, computerCard1, playerCard1, computerCard2, playerCard2, 1490, bool, 15, req.body.newGameId, flopCard1, flopCard2, flopCard3, turn, river, false, 10, 5, 0])
       .then((result) => {
         res.send(result.rows[0]);
       })
@@ -69,7 +69,7 @@ router.post('/firstHand', (req, res) => {
   router.get('/getHandInfo/:id', (req, res) => {
     console.log('elephant', req.params.id);
     let handId = req.params.id;
-    const queryText = `SELECT player_chips, computer_chips, pot, game_id, player_card_1, player_card_2, player_sb, player_action, player_bet, computer_bet, id FROM hand WHERE id=$1`
+    const queryText = `SELECT player_chips, computer_chips, pot, game_id, player_card_1, player_card_2, player_sb, player_action, player_bet, computer_bet, player_action_counter, id FROM hand WHERE id=$1`
     pool.query(queryText, [handId])
       .then((result) => {
         console.log('Successfully got hand details', result.rows);
@@ -85,7 +85,7 @@ router.post('/firstHand', (req, res) => {
   router.get('/getFlopAndHandInfo/:id', (req, res) => {
     console.log('moneytime', req.params.id);
     let id = req.params.id;
-    const queryText = `SELECT player_chips, computer_chips, pot, game_id, player_card_1, player_card_2, player_sb, flop_card_1, flop_card_2, flop_card_3, player_action, player_bet, computer_bet, id FROM  hand WHERE id=$1`
+    const queryText = `SELECT player_chips, computer_chips, pot, game_id, player_card_1, player_card_2, player_sb, flop_card_1, flop_card_2, flop_card_3, player_action, player_bet, computer_bet, player_action_counter, id FROM  hand WHERE id=$1`
     pool.query(queryText, [id])
       .then((result) => {
         console.log('Successfully got hand details', result.rows);
@@ -96,12 +96,6 @@ router.post('/firstHand', (req, res) => {
         res.sendStatus(500);
       })
   });
-
-  // router.put('/flop', (req, res) => {
-  //   console.log('flop', req.body);
-  //
-  // })
-
 
   router.post('/postNewHand', (req, res) => {
     let deck = new Deck;
@@ -120,13 +114,13 @@ router.post('/firstHand', (req, res) => {
     let burnCard3 = deck.deal();
     let river = deck.deal();
 
-    const queryText = `INSERT INTO hand (computer_chips, computer_card_1, player_card_1, computer_card_2, player_card_2, player_chips, player_sb, pot, game_id, flop_card_1, flop_card_2, flop_card_3, turn, river, player_action, player_bet, computer_bet)
+    const queryText = `INSERT INTO hand (computer_chips, computer_card_1, player_card_1, computer_card_2, player_card_2, player_chips, player_sb, pot, game_id, flop_card_1, flop_card_2, flop_card_3, turn, river, player_action, player_bet, computer_bet, player_action_counter)
                       Values
-                      ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+                      ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
                       RETURNING id`;
 
     if (req.body.gameInfo.player_sb) {
-      pool.query(queryText, [req.body.gameInfo.computer_chips - 10, computerCard1, playerCard1, computerCard2, playerCard2, req.body.gameInfo.player_chips - 5, !req.body.gameInfo.player_sb, req.body.gameInfo.pot + 15, req.body.gameInfo.game_id, flopCard1, flopCard2, flopCard3, turn, river, false, 10, 5])
+      pool.query(queryText, [req.body.gameInfo.computer_chips - 10, computerCard1, playerCard1, computerCard2, playerCard2, req.body.gameInfo.player_chips - 5, !req.body.gameInfo.player_sb, req.body.gameInfo.pot + 15, req.body.gameInfo.game_id, flopCard1, flopCard2, flopCard3, turn, river, false, 10, 5, 0])
         .then((result) => {
           res.send(result.rows[0]);
         })
@@ -134,7 +128,7 @@ router.post('/firstHand', (req, res) => {
           res.sendStatus(500);
         })
     } else {
-      pool.query(queryText, [req.body.gameInfo.computer_chips - 5, computerCard1, playerCard1, computerCard2, playerCard2, req.body.gameInfo.player_chips - 10, !req.body.gameInfo.player_sb, req.body.gameInfo.pot + 15, req.body.gameInfo.game_id, flopCard1, flopCard2, flopCard3, turn, river, true, 5, 10])
+      pool.query(queryText, [req.body.gameInfo.computer_chips - 5, computerCard1, playerCard1, computerCard2, playerCard2, req.body.gameInfo.player_chips - 10, !req.body.gameInfo.player_sb, req.body.gameInfo.pot + 15, req.body.gameInfo.game_id, flopCard1, flopCard2, flopCard3, turn, river, true, 5, 10, 0])
         .then((result) => {
           res.send(result.rows[0]);
         })

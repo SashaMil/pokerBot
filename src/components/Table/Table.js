@@ -28,9 +28,6 @@ class Table extends Component {
   constructor() {
     super();
 
-    this.state = {
-      newGame: false,
-    }
   }
 
   startGame = () => {
@@ -39,8 +36,8 @@ class Table extends Component {
   }
 
   componentDidUpdate = (prevProps) => {
-    if (this.props.table.state !== prevProps.table.state && !this.props.table.state.player_action) {
-      this.props.dispatch(computerDecision(this.props.table.state));
+    if (this.props.table.table.state !== prevProps.table.state && !this.props.table.table.state.player_action) {
+      this.props.dispatch(computerDecision(this.props.table.table.state));
     }
   }
 
@@ -48,11 +45,11 @@ class Table extends Component {
     return(
       <div>
         <div>
-          <Button color="secondary" onClick={this.startGame} disabled={this.props.table.state}>
+          <Button color="secondary" onClick={this.startGame} disabled={this.props.table.table.state}>
             Start Game
           </Button>
         </div>
-          {this.props.table.state ? (
+          {this.props.table.table.state ? (
             <div>
               <div>
                 <ComputerHand />

@@ -50,6 +50,10 @@ function* playerFold(action) {
       type: TABLE_ACTIONS.SET_GAME,
       payload: gameInfo,
     })
+    yield put({
+      type: TABLE_ACTIONS.SET_FLOP,
+      payload: [],
+    })
   } catch (error) {
     console.log('GAME CRASHED -- WHOOPS', error);
   }
@@ -59,7 +63,16 @@ function* playerCall(action) {
   try {
     handId = action.payload.gameInfo.id;
     yield playerCallRequest(action.payload.gameInfo);
-    gameInfo = yield getHandInfoRequest(handId);
+    if (action.payload.gameInfo.player_action_counter > 0) {
+      gameInfo = yield getFlopAndHandInfoRequest(handId);
+      gameInfo.player_action_counter = 0;
+      yield put({
+        type: TABLE_ACTIONS.SET_FLOP,
+        payload: [gameInfo.flop_card_1, gameInfo.flop_card_2, gameInfo.flop_card_3],
+      })
+    } else {
+      gameInfo = yield getHandInfoRequest(handId);
+    }
     yield put({
       type: TABLE_ACTIONS.SET_GAME,
       payload: gameInfo,
@@ -96,13 +109,23 @@ function* computerDecision(action) {
       gameInfo = yield getHandInfoRequest(handId);
       handId = yield postNewHandRequest(gameInfo);
       gameInfo = yield getHandInfoRequest(handId.id);
+      yield put({
+        type: TABLE_ACTIONS.SET_FLOP,
+        payload: [],
+      })
     }
     else if (decision === 'CALL') {
       console.log('COMPUTER CALLING');
       yield computerCallRequest(gameInfo);
-      if (gameInfo.player_sb) {
+      if (gameInfo.player_action_counter > 0) {
         gameInfo = yield getFlopAndHandInfoRequest(handId);
-      } else {
+        gameInfo.player_action_counter = 0;
+        yield put({
+          type: TABLE_ACTIONS.SET_FLOP,
+          payload: [gameInfo.flop_card_1, gameInfo.flop_card_2, gameInfo.flop_card_3],
+        })
+      }
+      else {
         gameInfo = yield getHandInfoRequest(handId);
       }
     }
@@ -121,88 +144,6 @@ function* computerDecision(action) {
     console.log('WHOOPS');
   }
 }
-
-// function* computerPreflopReaction(action) {
-//   try {
-//     betInfo = action.payload.betInfo;
-//     gameInfo = action.payload.gameInfo;
-//     handId = action.payload.gameInfo.id;
-//     playerAction = action.payload.playerAction;
-//     if (playerAction === 'RAISE') {
-//       yield playerBetRequest(betInfo, gameInfo);
-//       gameInfo = yield getHandInfoRequest(handId);
-//       yield put({
-//         type: TABLE_ACTIONS.SET_GAME,
-//         payload: gameInfo,
-//       })
-//     }
-//     computerAction = yield computerPreflopReactionRequest(betInfo, handId, playerAction);
-//     console.log('moose PEOPLE', computerAction);
-//     if (computerAction === 'CALL') {
-//       yield computerCallRequest(betInfo, gameInfo);
-//       gameInfo = yield getFlopAndHandInfoRequest(handId);
-//     }
-//     else if (computerAction === 'FOLD') {
-//       console.log('COMPUTER FOLD GOES HERE');
-//       console.log(gameInfo);
-//       yield computerFoldRequest(gameInfo);
-//       gameInfo = yield getHandInfoRequest(handId);
-//       handId = yield postNewHandRequest(gameInfo);
-//       gameInfo = yield getHandInfoRequest(handId);
-//     }
-//     else if (computerAction.computerAction === 'RAISE') {
-//       console.log('COMPUTER REACTION RAISE GOES HERE');
-//       yield computerCallRequest(computerAction.callAmount, gameInfo);
-//       gameInfo = yield getHandInfoRequest(handId);
-//       yield computerBetRequest(computerAction.raiseAmount, gameInfo);
-//       gameInfo = yield getHandInfoRequest(handId);
-//       gameInfo.player_action = true;
-//     }
-//     yield put({
-//       type: TABLE_ACTIONS.SET_GAME,
-//       payload: gameInfo,
-//     });
-//   }
-//   catch(error) {
-//     console.log('GAME CRASHED -- WHOOPS', error);
-//   }
-// }
-//
-// function* computerPreflopAction(action) {
-//   try {
-//     console.log(action.payload);
-//     handId = action.payload.gameInfo.id;
-//     computerAction = yield computerPreflopActionRequest(handId);
-//     console.log(computerAction);
-//     if (computerAction === 'CALL') {
-//       yield computerCallRequest(betInfo, gameInfo);
-//       gameInfo = yield getHandInfoRequest(handId);
-//     }
-//     else if (computerAction === 'FOLD') {
-//       console.log('COMPUTER FOLD GOES HERE', );
-//       yield computerFoldRequest(gameInfo);
-//       gameInfo = yield getHandInfoRequest(handId);
-//       handId = yield postNewHandRequest(gameInfo);
-//       handId = handId.id
-//       gameInfo = yield getHandInfoRequest(handId);
-//     }
-//     else if (computerAction.computerAction === 'RAISE') {
-//       console.log('COMPUTER RAISE GOES HERE');
-//       yield computerCallRequest(computerAction.callAmount, gameInfo);
-//       gameInfo = yield getHandInfoRequest(handId);
-//       yield computerBetRequest(computerAction.raiseAmount, gameInfo);
-//       gameInfo = yield getHandInfoRequest(handId);
-//       gameInfo.player_action = true;
-//     }
-//     yield put({
-//       type: TABLE_ACTIONS.SET_GAME,
-//       payload: gameInfo,
-//     });
-//   }
-//   catch(error) {
-//     console.log('GAME CRASHED -WHOOPS', error);
-//   }
-// }
 
 function* tableSaga() {
   yield takeLatest(TABLE_ACTIONS.NEW_GAME, newGame);

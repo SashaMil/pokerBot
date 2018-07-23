@@ -15,7 +15,7 @@ const Pot = ({ table }) => {
 
   return (
     <div>
-      <input value={table.state.pot}></input>
+      <input value={table.table.state.pot}></input>
     </div>
   )
 

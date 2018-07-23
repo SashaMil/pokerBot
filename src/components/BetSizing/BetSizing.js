@@ -34,11 +34,7 @@ class BetSizing extends Component {
   }
 
   bet = () => {
-    // this.props.dispatch(playerBet(this.state.value, this.props.table.state[0]));
-  }
-
-  raise = () => {
-    this.props.dispatch(playerBet(this.state.value, this.props.table.state));
+    this.props.dispatch(playerBet(this.state.value, this.props.table.table.state));
   }
 
   render() {
@@ -47,9 +43,9 @@ class BetSizing extends Component {
 
     return(
       <div className={classes.root}>
-        {this.props.table.state.flop && this.props.table.state.playerSb ? (
+        {this.props.table.table.state.flop && this.props.table.table.state.playerSb ? (
           <div>
-            <Button disabled={!this.props.table.state.player_action} variant="contained" color="primary" className={styles.button} onClick={this.bet}>
+            <Button disabled={!this.props.table.table.state.player_action} variant="contained" color="primary" className={styles.button} onClick={this.bet}>
               Bet
             </Button>
           </div>
@@ -57,7 +53,7 @@ class BetSizing extends Component {
           <div>
             <Slider value={value} min={10} max={1500} step={1} onChange={(event, value) => this.changeSlider(event,value)} />
             <input value={this.state.value} />
-            <Button disabled={!this.props.table.state.player_action} variant="contained" color="primary" className={styles.cssRoot} onClick={this.raise}>
+            <Button disabled={!this.props.table.table.state.player_action} variant="contained" color="primary" className={styles.cssRoot} onClick={this.bet}>
               Raise
             </Button>
           </div>

@@ -39,23 +39,23 @@ class PlayerController extends Component {
   }
 
   fold = () => {
-    this.props.dispatch(playerFold(this.props.table.state));
+    this.props.dispatch(playerFold(this.props.table.table.state));
   }
 
   call = () => {
-    this.props.dispatch(playerCall(this.props.table.state));
+    this.props.dispatch(playerCall(this.props.table.table.state));
   }
 
   render() {
     return(
       <div>
-        {this.props.table.state.player_action && !this.props.table.state.flop ? (
+        {this.props.table.table.state.player_action && !this.props.table.table.state.flop ? (
           <div>
             <Button onClick={this.fold} variant="contained" color="secondary" className={styles.button}>
               Fold
             </Button>
-            {this.props.table.state.player_bet === this.props.table.state.computer_bet ? (
-              <Button onClick={this.check} variant="contained" color="default" className={styles.button}>
+            {this.props.table.table.state.player_bet === this.props.table.table.state.computer_bet ? (
+              <Button onClick={this.call} variant="contained" color="default" className={styles.button}>
                 Check
               </Button>
             ) : (
@@ -66,10 +66,10 @@ class PlayerController extends Component {
           </div>
           ) : (
             <div>
-              <Button onClick={this.fold} disabled={!this.props.table.state.player_action} variant="contained" color="secondary" className={styles.button}>
+              <Button onClick={this.fold} disabled={!this.props.table.table.state.player_action} variant="contained" color="secondary" className={styles.button}>
                 Fold
               </Button>
-              <Button disabled={!this.props.table.state.player_action} variant="contained" color="default" className={styles.button}>
+              <Button disabled={!this.props.table.table.state.player_action} variant="contained" color="default" className={styles.button}>
                 Check
               </Button>
             </div>

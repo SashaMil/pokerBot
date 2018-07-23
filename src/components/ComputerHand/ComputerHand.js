@@ -14,10 +14,10 @@ const PlayerHand = ({ table }) => {
 
   return (
     <div>
-      <Slide direction="right" in={table.state.player_card_1} mountOnEnter unmountOnExit>
+      <Slide direction="right" in={table.table.state.player_card_1} mountOnEnter unmountOnExit>
         <img width='120px' src={'images/Cards/purple_back.png'} />
       </Slide>
-      <Slide direction="right" in={table.state.player_card_1} mountOnEnter unmountOnExit>
+      <Slide direction="right" in={table.table.state.player_card_1} mountOnEnter unmountOnExit>
         <img width='120px' src={'images/Cards/purple_back.png'} />
       </Slide>
     </div>

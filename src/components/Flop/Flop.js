@@ -15,14 +15,14 @@ const Flop = ({ table }) => {
 
     return (
       <div>
-        <Slide direction="right" in={table.state.flop_card_1} mountOnEnter unmountOnExit>
-          <img width='120px' src={`images/Cards/${table.state.flop_card_1}.png`} />
+        <Slide direction="right" in={table.street.flop[0]} mountOnEnter unmountOnExit>
+          <img width='120px' src={`images/Cards/${table.street.flop[0]}.png`} />
         </Slide>
-        <Slide direction="right" in={table.state.flop_card_2} mountOnEnter unmountOnExit>
-          <img width='120px' src={`images/Cards/${table.state.flop_card_2}.png`} />
+        <Slide direction="right" in={table.street.flop[1]} mountOnEnter unmountOnExit>
+          <img width='120px' src={`images/Cards/${table.street.flop[1]}.png`} />
         </Slide>
-        <Slide direction="right" in={table.state.flop_card_3} mountOnEnter unmountOnExit>
-          <img width='120px' src={`images/Cards/${table.state.flop_card_3}.png`} />
+        <Slide direction="right" in={table.street.flop[2]} mountOnEnter unmountOnExit>
+          <img width='120px' src={`images/Cards/${table.street.flop[2]}.png`} />
         </Slide>
       </div>
     )
