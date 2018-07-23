@@ -1,7 +1,7 @@
 function computerLogic (playerBet, computerBet, pot, computerChips, playerChips, computerCard1, computerCard2, street) {
 
-  if (street) {
-    console.log('dolphin baby', street.flop);
+  if (street.flop.length === 3) {
+    console.log('dolphin baby', street);
     let street = street.flop;
     computerCard1 = parseInt(computerCard1.slice(0, -1));
     computerCard2 = parseInt(computerCard2.slice(0 ,-1));

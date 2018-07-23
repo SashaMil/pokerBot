@@ -23,13 +23,14 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  console.log('markers', req.body);
+  console.log('chewbaca', req.body);
   console.log(req.body.gameInfo.id);
   const queryText = `SELECT * FROM hand WHERE id=$1`;
-  return pool.query(queryText, [req.body.gameInfo.id])
+  pool.query(queryText, [req.body.gameInfo.id])
     .then((result) => {
-      let computerAction = (computerLogic(result.rows[0].player_bet, result.rows[0].computer_bet, result.rows[0].pot, result.rows[0].computer_chips, result.rows[0].player_chips, result.rows[0].computer_card_1, result.rows[0].computer_card_2, req.body.street));
-      console.log('yogurt', computerAction);
+      console.log(req.body.street.flop);
+      let computerAction = (computerLogic(result.rows[0].player_bet, result.rows[0].computer_bet, result.rows[0].pot, result.rows[0].computer_chips, result.rows[0].player_chips, result.rows[0].computer_card_1, result.rows[0].computer_card_2, req.body.street.flop));
+      console.log('chewbaca', computerAction);
       if (computerAction === 'CALL' || computerAction === 'FOLD') {
         res.send(computerAction);
       }
