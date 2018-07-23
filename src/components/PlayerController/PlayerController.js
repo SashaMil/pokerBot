@@ -49,15 +49,21 @@ class PlayerController extends Component {
   render() {
     return(
       <div>
-          {this.props.table.state.player_action && !this.props.table.state.flop ? (
-            <div>
-              <Button onClick={this.fold} variant="contained" color="secondary" className={styles.button}>
-                Fold
+        {this.props.table.state.player_action && !this.props.table.state.flop ? (
+          <div>
+            <Button onClick={this.fold} variant="contained" color="secondary" className={styles.button}>
+              Fold
+            </Button>
+            {this.props.table.state.player_bet === this.props.table.state.computer_bet ? (
+              <Button onClick={this.check} variant="contained" color="default" className={styles.button}>
+                Check
               </Button>
+            ) : (
               <Button onClick={this.call} variant="contained" color="default" className={styles.button}>
                 Call
               </Button>
-            </div>
+            )}
+          </div>
           ) : (
             <div>
               <Button onClick={this.fold} disabled={!this.props.table.state.player_action} variant="contained" color="secondary" className={styles.button}>

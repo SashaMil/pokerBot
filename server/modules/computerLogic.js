@@ -6,22 +6,25 @@ function computerLogic (playerBet, computerBet, pot, computerChips, playerChips,
   console.log(playerBet, computerBet, pot, computerChips, playerChips, computerCard1, computerCard2);
   let handPoints = (evaluateStartingHand(computerCard1, computerCard2));
 
-  if (handPoints >= 200) {
+  if (handPoints === 0 && playerBet > computerBet) {
     return 'FOLD';
   }
-  if (handPoints >= 600) {
+
+  if (handPoints === 0 && playerBet === computerBet) {
     return 'CALL';
   }
-  if (handPoints === 6) {
+
+  if (handPoints === 1 || handPoints === 2) {
     return 'CALL';
   }
-  if (handPoints >= 0) {
+
+  if (handPoints >= 3) {
     if (playerBet === 0) {
       return {actionType: 'BET', betAmount: 30}
     }
     return {actionType: 'BET', betAmount: playerBet * 3}
   }
-
+  
 }
 
 function evaluateStartingHand(str1, str2) {

@@ -100,7 +100,11 @@ function* computerDecision(action) {
     else if (decision === 'CALL') {
       console.log('COMPUTER CALLING');
       yield computerCallRequest(gameInfo);
-      gameInfo = yield getHandInfoRequest(handId);
+      if (gameInfo.player_sb) {
+        gameInfo = yield getFlopAndHandInfoRequest(handId);
+      } else {
+        gameInfo = yield getHandInfoRequest(handId);
+      }
     }
     else if (decision.actionType === 'BET') {
       console.log('COMPUTER RAISING');
