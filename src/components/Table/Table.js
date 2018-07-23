@@ -39,7 +39,7 @@ class Table extends Component {
   }
 
   componentDidUpdate = (prevProps) => {
-    if (this.props.table.state !== prevProps.table.state && !this.props.table.state.player_action) {
+    if (this.props.table.state !== prevProps.table.state && !this.props.table.state.player_action && !this.props.table.state.player_sb) {
       console.log('TESTING', this.props.table.state)
       this.props.dispatch(computerPreflopAction(this.props.table.state));
     }

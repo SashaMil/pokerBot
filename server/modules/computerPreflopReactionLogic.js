@@ -9,7 +9,7 @@ function computerPreflopReactionLogic (actionType, playerBet, pot, computerChips
   if (handPoints === 8 && actionType === 'RAISE') {
     return 'FOLD';
   }
-  if (handPoints ===9  && actionType === 'RAISE') {
+  if (handPoints === 9  && actionType === 'RAISE') {
     return 'CALL';
   }
   if (handPoints === 6 && actionType === 'RAISE') {
@@ -18,8 +18,6 @@ function computerPreflopReactionLogic (actionType, playerBet, pot, computerChips
   if (handPoints >= 0 && actionType === 'RAISE') {
     return ['RAISE', playerBet, (playerBet * 3) - playerBet];
   }
-  // console.log(evaluateHandPreflop(computerCard1, computerCard2));
-  // return(evaluateHandPreflop(computerCard1, computerCard2));
 
 }
 

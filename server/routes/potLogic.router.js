@@ -48,9 +48,9 @@ router.put('/computerCall', (req, res) => {
   let handId = req.body.gameInfo.id;
   let newComputerChips = req.body.gameInfo.computer_chips - computerCallAmount;
   let newPot = req.body.gameInfo.pot + computerCallAmount;
-
-  const queryText = `UPDATE hand SET pot=$2, computer_chips=$3 WHERE id=$1`;
-  pool.query(queryText, [handId, newPot, newComputerChips])
+  let playerAction = !req.body.gameInfo.player_action;
+  const queryText = `UPDATE hand SET pot=$2, computer_chips=$3, player_action=$4 WHERE id=$1`;
+  pool.query(queryText, [handId, newPot, newComputerChips, playerAction])
     .then((result) => {
       console.log('Finished changing db for computer call');
       res.sendStatus(200);

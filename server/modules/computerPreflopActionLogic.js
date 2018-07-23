@@ -9,14 +9,12 @@ function computerPreflopActionLogic (pot, computerChips, playerChips, computerCa
   if (handPoints === 10) {
     return 'FOLD';
   }
-  if (handPoints >= 0 || handPoints === 2) {
+  if (handPoints > 400 || handPoints === 69) {
     return 'CALL';
   }
-  if (handPoints > 400) {
-    return ['RAISE', playerBet, (playerBet * 3) - playerBet];
+  if (handPoints >= 0) {
+    return ['RAISE', 5, 20];
   }
-  // console.log(evaluateHandPreflop(computerCard1, computerCard2));
-  // return(evaluateHandPreflop(computerCard1, computerCard2));
 
 }
 

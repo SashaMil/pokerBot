@@ -67,6 +67,7 @@ function* computerPreflopReaction(action) {
       })
     }
     computerAction = yield computerPreflopReactionRequest(betInfo, handId, playerAction);
+    console.log('moose PEOPLE', computerAction);
     if (computerAction === 'CALL') {
       yield computerCallRequest(betInfo, gameInfo);
       gameInfo = yield getFlopAndHandInfoRequest(handId);
@@ -80,12 +81,12 @@ function* computerPreflopReaction(action) {
       gameInfo = yield getHandInfoRequest(handId);
     }
     else if (computerAction.computerAction === 'RAISE') {
-      console.log('COMPUTER RAISE GOES HERE');
+      console.log('COMPUTER REACTION RAISE GOES HERE');
       yield computerCallRequest(computerAction.callAmount, gameInfo);
-      console.log('LOOK HERE', handId);
       gameInfo = yield getHandInfoRequest(handId);
       yield computerBetRequest(computerAction.raiseAmount, gameInfo);
-      gameInfo = yield getHandInfoRequest(handId)
+      gameInfo = yield getHandInfoRequest(handId);
+      gameInfo.player_action = true;
     }
     yield put({
       type: TABLE_ACTIONS.SET_GAME,
@@ -101,16 +102,14 @@ function* computerPreflopAction(action) {
   try {
     console.log(action.payload);
     handId = action.payload.gameInfo.id;
-    console.log('godzilla', handId);
     computerAction = yield computerPreflopActionRequest(handId);
     console.log(computerAction);
     if (computerAction === 'CALL') {
       yield computerCallRequest(betInfo, gameInfo);
-      gameInfo = yield getFlopAndHandInfoRequest(handId);
+      gameInfo = yield getHandInfoRequest(handId);
     }
     else if (computerAction === 'FOLD') {
       console.log('COMPUTER FOLD GOES HERE', );
-      console.log(gameInfo);
       yield computerFoldRequest(gameInfo);
       gameInfo = yield getHandInfoRequest(handId);
       handId = yield postNewHandRequest(gameInfo);
@@ -120,10 +119,10 @@ function* computerPreflopAction(action) {
     else if (computerAction.computerAction === 'RAISE') {
       console.log('COMPUTER RAISE GOES HERE');
       yield computerCallRequest(computerAction.callAmount, gameInfo);
-      console.log('LOOK HERE', handId);
       gameInfo = yield getHandInfoRequest(handId);
       yield computerBetRequest(computerAction.raiseAmount, gameInfo);
-      gameInfo = yield getHandInfoRequest(handId)
+      gameInfo = yield getHandInfoRequest(handId);
+      gameInfo.player_action = true;
     }
     yield put({
       type: TABLE_ACTIONS.SET_GAME,

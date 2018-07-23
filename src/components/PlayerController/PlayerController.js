@@ -42,11 +42,11 @@ class PlayerController extends Component {
     this.props.dispatch(playerFold(this.props.table.state.id, this.props.table.state.pot, this.props.table.state.computer_chips));
   }
 
-  componentDidMount = () => {
-    if (!this.props.table.state.player_action) {
-      this.props.dispatch(computerPreflopAction(this.props.table.state));
-    }
-  }
+  // componentDidMount = () => {
+  //   if (!this.props.table.state.player_action) {
+  //     this.props.dispatch(computerPreflopAction(this.props.table.state));
+  //   }
+  // }
 
   render() {
     return(
