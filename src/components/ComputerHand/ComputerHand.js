@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import {Link} from 'react-router-dom';
+import Slide from '@material-ui/core/Slide';
 
 
 const mapStateToProps = state => ({
@@ -13,11 +14,22 @@ const PlayerHand = ({ table }) => {
 
   return (
     <div>
-      <img width='120px' src={'images/Cards/purple_back.png'} />
-      <img width='120px' src={'images/Cards/purple_back.png'} />
+      <Slide direction="right" in={table.state.player_card_1} mountOnEnter unmountOnExit>
+        <img width='120px' src={'images/Cards/purple_back.png'} />
+      </Slide>
+      <Slide direction="right" in={table.state.player_card_1} mountOnEnter unmountOnExit>
+        <img width='120px' src={'images/Cards/purple_back.png'} />
+      </Slide>
     </div>
   )
 }
+
+Slide.defaultProps = {
+  timeout: {
+    enter: 1000,
+    exit: 1000,
+  },
+};
 
 
 export default compose(connect(mapStateToProps))(PlayerHand);
