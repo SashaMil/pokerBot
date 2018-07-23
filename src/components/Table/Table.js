@@ -16,10 +16,6 @@ import { computerDecision } from '../../redux/actions/tableActions';
 import { computerDecisionStreet } from '../../redux/actions/tableActions';
 import Button from '@material-ui/core/Button';
 
-
-
-
-
 const mapStateToProps = state => ({
   user: state.user,
   table: state.table,
@@ -38,7 +34,6 @@ class Table extends Component {
 
   componentDidUpdate = (prevProps) => {
     if (this.props.table.table.state !== prevProps.table.table.state && !this.props.table.table.state.player_action) {
-      console.log(prevProps.table.table.state);
       if (this.props.table.table.state.player_action_counter < 2 && this.props.table.table.state.player_sb) {
         this.props.dispatch(computerDecision(this.props.table.table.state));
       }

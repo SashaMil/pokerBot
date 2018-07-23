@@ -10,7 +10,12 @@ class Stats extends Component {
   render() {
     return (
       <div>
-        Hello
+        <p style={{color: 'white'}}>Win Percentage: 57%</p>
+        <p style={{color: 'white'}}>Games Played: 26</p>
+        <p style={{color: 'white'}}>Games Played: 26</p>
+
+
+
       </div>
     );
   };

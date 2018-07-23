@@ -11,7 +11,6 @@ import purple from '@material-ui/core/colors/purple';
 import { playerCall } from '../../redux/actions/tableActions';
 
 
-
 const styles = theme => ({
   button: {
     margin: 'theme.spacing.unit',
