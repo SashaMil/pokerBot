@@ -63,20 +63,27 @@ function* playerCall(action) {
   try {
     handId = action.payload.gameInfo.id;
     yield playerCallRequest(action.payload.gameInfo);
-    if (action.payload.gameInfo.player_action_counter > 0) {
+    gameInfo = yield getHandInfoRequest(handId);
+    if ((!gameInfo.player_sb && gameInfo.player_action_counter > 0) || (gameInfo.player_sb && gameInfo.player_action_counter > 1)) {
       gameInfo = yield getFlopAndHandInfoRequest(handId);
-      gameInfo.player_action_counter = 0;
       yield put({
         type: TABLE_ACTIONS.SET_FLOP,
         payload: [gameInfo.flop_card_1, gameInfo.flop_card_2, gameInfo.flop_card_3],
       })
-    } else {
-      gameInfo = yield getHandInfoRequest(handId);
+      console.log('peekaboo', gameInfo);
+      yield put({
+        type: TABLE_ACTIONS.SET_GAME,
+        payload: gameInfo,
+      })
     }
-    yield put({
-      type: TABLE_ACTIONS.SET_GAME,
-      payload: gameInfo,
-    })
+    else {
+      gameInfo = yield getHandInfoRequest(handId);
+      yield put({
+        type: TABLE_ACTIONS.SET_GAME,
+        payload: gameInfo,
+      })
+    }
+
   }
   catch (error) {
     console.log('WHOOPS');
@@ -99,7 +106,9 @@ function* playerBet(action) {
 }
 
 function* computerDecision(action) {
+
   try {
+    
     handId = action.payload.gameInfo.id;
     gameInfo = action.payload.gameInfo;
     decision = yield computerActionRequest(handId);
@@ -117,9 +126,9 @@ function* computerDecision(action) {
     else if (decision === 'CALL') {
       console.log('COMPUTER CALLING');
       yield computerCallRequest(gameInfo);
+      gameInfo = yield getHandInfoRequest(handId);
       if (gameInfo.player_action_counter > 0) {
         gameInfo = yield getFlopAndHandInfoRequest(handId);
-        gameInfo.player_action_counter = 0;
         yield put({
           type: TABLE_ACTIONS.SET_FLOP,
           payload: [gameInfo.flop_card_1, gameInfo.flop_card_2, gameInfo.flop_card_3],

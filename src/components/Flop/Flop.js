@@ -6,10 +6,13 @@ import Slide from '@material-ui/core/Slide';
 
 
 
+
 const mapStateToProps = state => ({
   user: state.user,
   table: state.table,
 });
+
+
 
 const Flop = ({ table }) => {
 

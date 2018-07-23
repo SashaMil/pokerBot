@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Flop from '../Flop/Flop';
 import Turn from '../Turn/Turn';
 import River from '../River/River';
+import { computerDecision } from '../../redux/actions/tableActions';
 
 const mapStateToProps = state => ({
   user: state.user,
@@ -25,6 +26,12 @@ class Street extends Component {
   isFlop = () => {
 
   }
+
+  // componentDidUpdate = (prevProps) => {
+  //   if (this.props.table.table.state.flop_card_1 !== prevProps.table.table.state.flop_card_1 && !this.props.table.table.state.player_action) {
+  //
+  //   }
+  // }
 
   render() {
 

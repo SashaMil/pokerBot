@@ -37,8 +37,14 @@ class Table extends Component {
 
   componentDidUpdate = (prevProps) => {
     if (this.props.table.table.state !== prevProps.table.state && !this.props.table.table.state.player_action) {
-      this.props.dispatch(computerDecision(this.props.table.table.state));
+      if (this.props.table.table.state.player_action_counter < 2 && this.props.table.table.state.player_sb) {
+        this.props.dispatch(computerDecision(this.props.table.table.state));
+      }
+      if (this.props.table.table.state.player_action_counter < 1 && !this.props.table.table.state.player_sb) {
+        this.props.dispatch(computerDecision(this.props.table.table.state));
+      }
     }
+
   }
 
   render() {

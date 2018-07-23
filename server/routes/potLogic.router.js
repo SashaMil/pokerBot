@@ -94,6 +94,7 @@ router.put('/playerBet', (req, res) => {
   let newPlayerChips = req.body.gameInfo.player_chips - req.body.betAmount;
   let playerAction = !req.body.gameInfo.player_action;
   let playerActionCounter = req.body.gameInfo.player_action_counter + 1;
+  console.log('Giraffe', playerActionCounter);
 
   const queryText = 'UPDATE hand SET pot=$2, player_chips=$3, player_action=$4, player_bet=$5, player_action_counter=$6 WHERE id=$1';
   pool.query(queryText, [handId, newPot, newPlayerChips, playerAction, newPlayerBet, playerActionCounter])
